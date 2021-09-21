@@ -10,7 +10,7 @@ export class Header extends React.Component<HeaderProps, {}> {
         const { brand } = this.props
         return(
             <nav>
-                <h1> {brand} </h1>
+                <h1 style={{ color: 'red', fontSize: '5em', textAlign: 'center'}}> {brand} </h1>
                 {/* <img src={logo} alt="my logo"/> */}
 
             </nav>

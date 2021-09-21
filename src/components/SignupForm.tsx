@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
+import { Col, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, Button } from 'reactstrap';
 
 type Props = {
     updateToken: (newToken: string) => void
@@ -9,6 +9,7 @@ interface AuthState {
     email: string
     password: string
     isAdmin: boolean
+    errorText: string
 }
 
 export default class Signup extends React.Component<Props, AuthState>{
@@ -17,145 +18,112 @@ export default class Signup extends React.Component<Props, AuthState>{
         this.state = {
             email: '',
             password: '',
-            isAdmin: false
+            isAdmin: false,
+            errorText: ''
         }
     }
 
-    handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const target = e.target
-        const value = target.value
-        const name = target.name
-        this.setState({} )
+    handleClick = (e: React.FormEvent<HTMLInputElement>) => {
+        this.setState({ isAdmin: !this.state.isAdmin})
+
     }
 
-    handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        fetch('http://localhost:3000/user/register', {
-            method: 'POST',
-            body: JSON.stringify({
-                user:{
-                    email: this.state.email, 
-                    passwordhash: this.state.password, 
-                    isAdmin: this.state.isAdmin,
-                },}),
-            headers: new Headers({
-                'Content-Type': 'application/json'
+        const reqBody = {
+            User: {
+                email: this.state.email,
+                password: this.state.password,
+                isAdmin: this.state.isAdmin,
+            }
+        }
+        console.log(reqBody)
+        try {
+            const res = await fetch('http://localhost:3000/User/register', {
+                method: "POST",
+                body: JSON.stringify(reqBody),
+                headers: {
+                    "Content-Type": "application/json"
+                },
             })
-        }).then(
-            (response) => response.json()
-        ).then((data) => {
-            this.props.updateToken(data.sessionToken)
-        })
+            console.log( res)
+            const json = await res.json();
+            console.log(json)
+            if (json.errors) {
+                let errMsg = json.errors[0].message 
+                this.setState({ errorText: errMsg.charAt(0).toUpperCase() + errMsg.slice(1) + '.'})
+                throw new Error(json.errors[0].message)
+            } else {
+                console.log(json.Message);
 
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
     render() {
-        return(
+        return (
             <div>
-                <Form onSubmit={this.handleSubmit}>
-                <FormGroup>
-                    <Label htmlFor="email">Email</Label>
-                    <Input onChange={(e)=> this.state.email(e.target.value)}  name="email" value={email} required/>
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="password">Password</Label>
-                    <Input onChange={(e)=> this.state.password(e.target.value)} name="password" value={password} required/>
-                </FormGroup>
-                <Button type="submit">Sign Up</Button>
-            </Form>
+                <form onSubmit={this.handleSubmit}>
+                <h3>Register a new User</h3>
+
+                <div className="form-group">
+                    <label htmlFor="email">Email address</label>
+                    <input 
+                        type="email" className="form-control" placeholder="Enter email"  
+                        onChange={(e) => this.setState({ email: e.target.value })} name="email" value={this.state.email} required
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label>Password</label>
+                    <input 
+                        type="password" className="form-control" placeholder="Enter password" 
+                        onChange={(e) => this.setState({ password: e.target.value })} name="password" value={this.state.password} required
+                    />
+                </div>
+                <div>
+
+                </div>
+
+                <div className="form-group">
+                    <div className="custom-control custom-checkbox">
+                        <input 
+                        type="checkbox" className="custom-control-input" id="customCheck1" 
+                        checked={this.state.isAdmin}
+                        onChange={e => this.handleClick(e)} 
+                        
+                        />
+                        <label className="custom-control-label" htmlFor="customCheck1">Admin User</label>
+                    </div>
+                </div>
+
+                <button type="submit" className="btn btn-secondary btn-block">Submit</button>
+                
+            </form>
             </div>
         )
     }
 }
 
 
-
-// const Regex = RegExp(/^\s?[A-Z0–9]+[A-Z0–9._+-]{0,}@[A-Z0–9._+-]+\.[A-Z0–9]{2,4}\s?$/i);
-// interface SignUpProps {
-//     token: string,
-//     name?: any;
-//     value?: any;
-// }
-// interface SignUpState {
-//     email: string,
-//     password: string,
-//     errors: {
-//         email: string,
-//         password: string
-//     }
-// }
-
-// export class Signup extends React.Component<SignUpProps, SignUpState>{
-// constructor(props: SignUpProps) {
-//     super(props);
-//     const initialState = {
-//         email: "",
-//         password: "",
-//         errors: {
-//             email: "",
-//             password: ""
-//         }
-//     }
-//     this.state = initialState;
-// }
-
-// handleChange = (event: any) => {
-//     event.preventDefault();
-//     const {name, value} = event.target;
-//     let errors = this.state.errors;
-//     switch (name) {
-//         case 'email':
-//             errors.email = Regex.test(value)? '': 'Email is not valid';
-//             break;
-//         case 'password':
-//             errors.password = value.length < 8 ? 'Password must be 8 characters': '';
-//             break;
-//         default:
-//             break;
-//     }
-//     this.setState(Object.assign(this.state, {errors,[name]: value}));
-//     console.log(name);
-//     console.log(this.state.errors);
-// }
-// handleSubmit = (event: any) => {
-//     event.preventDefault();
-//         console.log(user, password);
-//         fetch('http://localhost:3000/user/register', {
-//             method: 'POST',
-//             body: JSON.stringify({user:{email, passwordhash: password}}),
-//             headers: new Headers({
-//                 'Content-Type': 'application/json'
-//             })
-//         }).then(
-//             (response) => response.json()
-//         ).then((data) => {
-//             props.updateToken(data.sessionToken)
-//         })
-// }
-
-//     render() {
-//         const {errors} = this.state
-//         return(
-//             <div className='wrapper'>
-//                 <div className="form-wrapper">
-//                     <h2>Signup</h2>
-//                     <form onSubmit={this.handleSubmit} noValidate>
-//                         <div className="email">
-//                             <label htmlFor="email">Email</label>
-//                             <input type='text' name='email' onChange={this.handleChange}/>
-//                             {errors.email.length > 0 && <span style={{color:"red"}}>
-//                                 {errors.email}</span>}
-//                         </div>
-//                         <div className='password'>
-//                             <label htmlFor='password'>Password</label>
-//                             <input type='password' name='password' onChange={this.handleChange}/>
-//                         </div>
-//                         <div className='submit'>
-//                             <button>Create Account</button>
-//                         </div>
-//                     </form>
-//                 </div>
-
-//             </div>
-//         )
-//     }
-// }
+{/* <Form onSubmit={this.handleSubmit}>
+                    <FormGroup>
+                        <Label htmlFor="email">Email</Label>
+                        <Input onChange={(e) => this.setState({ email: e.target.value })} name="email" value={this.state.email} required />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label htmlFor="password">Password</Label>
+                        <Input onChange={(e) => this.setState({ password: e.target.value })} name="password" value={this.state.password} required />
+                    </FormGroup>
+                    <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                                <Input addon type="checkbox" aria-label="Checkbox for following text input" />
+                                
+                            </InputGroupText>
+                        </InputGroupAddon>
+                        
+                    </InputGroup>
+                    <Button type="submit">Sign Up</Button>
+                </Form> */}
