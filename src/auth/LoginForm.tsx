@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, Button } from 'reactstrap';
+
 
 type Props = {
     updateToken: (newToken: string) => void
@@ -8,38 +8,32 @@ type Props = {
 interface AuthState {
     email: string
     password: string
-    isAdmin: boolean
     errorText: string
 }
 
-export default class Signup extends React.Component<Props, AuthState>{
+export default class Login extends React.Component<Props, AuthState>{
     constructor(props: Props) {
         super(props)
         this.state = {
             email: '',
             password: '',
-            isAdmin: false,
             errorText: ''
         }
     }
 
-    handleClick = (e: React.FormEvent<HTMLInputElement>) => {
-        this.setState({ isAdmin: !this.state.isAdmin})
 
-    }
 
     handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const reqBody = {
             User: {
                 email: this.state.email,
-                password: this.state.password,
-                isAdmin: this.state.isAdmin,
+                password: this.state.password
             }
         }
         console.log(reqBody)
         try {
-            const res = await fetch('http://localhost:3000/User/register', {
+            const res = await fetch('http://localhost:3000/User/login', {
                 method: "POST",
                 body: JSON.stringify(reqBody),
                 headers: {
@@ -65,7 +59,7 @@ export default class Signup extends React.Component<Props, AuthState>{
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                <h3>Register a new User</h3>
+                <h3>User Login</h3>
 
                 <div className="form-group">
                     <label htmlFor="email">Email address</label>
@@ -86,17 +80,7 @@ export default class Signup extends React.Component<Props, AuthState>{
 
                 </div>
 
-                <div className="form-group">
-                    <div className="custom-control custom-checkbox">
-                        <input 
-                        type="checkbox" className="custom-control-input" id="customCheck1" 
-                        checked={this.state.isAdmin}
-                        onChange={e => this.handleClick(e)} 
-                        
-                        />
-                        <label className="custom-control-label" htmlFor="customCheck1">Admin User</label>
-                    </div>
-                </div>
+                
 
                 <button type="submit" className="btn btn-secondary btn-block">Submit</button>
                 
@@ -105,25 +89,3 @@ export default class Signup extends React.Component<Props, AuthState>{
         )
     }
 }
-
-
-{/* <Form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <Label htmlFor="email">Email</Label>
-                        <Input onChange={(e) => this.setState({ email: e.target.value })} name="email" value={this.state.email} required />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label htmlFor="password">Password</Label>
-                        <Input onChange={(e) => this.setState({ password: e.target.value })} name="password" value={this.state.password} required />
-                    </FormGroup>
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                                <Input addon type="checkbox" aria-label="Checkbox for following text input" />
-                                
-                            </InputGroupText>
-                        </InputGroupAddon>
-                        
-                    </InputGroup>
-                    <Button type="submit">Sign Up</Button>
-                </Form> */}

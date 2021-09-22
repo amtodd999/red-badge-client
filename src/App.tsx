@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Signup from './components/SignupForm';
+// import Signup from './auth/SignupForm';
+// import Login from './auth/LoginForm';
+import Auth from './auth/Auth';
+
+import Movie from './movies/Movie';
 
 import { Header } from './common';
 
@@ -53,7 +57,9 @@ class App extends Component<{}, AppState> {
       <div className="auth-wrapper">
         <Header brand="Izutu" />
         <div className="auth-inner">
-          <Signup updateToken={this.updateToken} />
+        <Auth />
+          {/* <Signup updateToken={this.updateToken} />
+          <Login updateToken={this.updateToken} /> */}
         </div>
       </div>
     )
