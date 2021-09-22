@@ -100,10 +100,10 @@ export default class Signup extends React.Component<Props, AuthState>{
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-secondary btn-block">Submit</button>
+                <button type="submit" className="btn btn-secondary btn-block">Register</button>
                 
             </form>
-            <Login updateToken={this.updateToken} />
+            {/* <Login updateToken={this.props.updateToken} /> */}
             </div>
         )
     }

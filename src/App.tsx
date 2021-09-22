@@ -57,7 +57,7 @@ class App extends Component<{}, AppState> {
       <div className="auth-wrapper">
         <Header brand="Izutu" />
         <div className="auth-inner">
-        <Auth />
+        <Auth updateToken={this.updateToken}/>
           {/* <Signup updateToken={this.updateToken} />
           <Login updateToken={this.updateToken} /> */}
         </div>
