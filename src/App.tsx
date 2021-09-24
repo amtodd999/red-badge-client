@@ -7,12 +7,13 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 // import Login from './auth/LoginForm';
 import Auth from './auth/Auth';
 
-import Movie from './movies/Movie';
+import DisplayMovies from './movies/DisplayMovies';
 
-import { Header } from './common';
+import { Menu } from './common';
+
 
 type AppState = {
-  token: string
+  sessionToken: string
 }
 
 
@@ -20,34 +21,41 @@ class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props)
     this.state = {
-      token: '',
+      sessionToken: '',
     }
   }
 
   componentDidMount() {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('sessionToken')) {
       this.setState({
-        token: localStorage.getItem('token')!,
+        sessionToken: localStorage.getItem('sessionToken')!,
       })
     }
-    console.log(this.state.token)
+    console.log(this.state.sessionToken)
   }
 
   updateToken = (newToken: string): void => {
-    localStorage.setItem('token', newToken)
-    this.setState({ token: newToken })
-    console.log(this.state.token + " updated token")
+    localStorage.setItem('sessionToken', newToken)
+    this.setState({ sessionToken: newToken })
+    console.log(this.state.sessionToken + " updated token")
   }
 
   clearToken = () => {
     localStorage.clear()
-    this.setState({ token: '' })
+    this.setState({ sessionToken: '' })
   }
 
   protectedViews = () => {
-    return this.state.token === localStorage.getItem('token') ?
-      (<div>put movie stuff here</div>) :
-      (<div>put account page here</div>)
+    return (
+      
+      this.state.sessionToken === localStorage.getItem('sessionToken') ?
+        (<DisplayMovies 
+          sessionToken={this.state.sessionToken} 
+          clearToken={this.clearToken}
+          />) :
+        (<Auth updateToken={this.updateToken}/>)
+        
+    )
 
   }
 
@@ -55,9 +63,10 @@ class App extends Component<{}, AppState> {
   render() {
     return (
       <div className="auth-wrapper">
-        <Header brand="Izutu" />
+        <Menu />
         <div className="auth-inner">
-        <Auth updateToken={this.updateToken}/>
+        {/* <Auth updateToken={this.updateToken}/> */}
+        {this.protectedViews()}
           {/* <Signup updateToken={this.updateToken} />
           <Login updateToken={this.updateToken} /> */}
         </div>

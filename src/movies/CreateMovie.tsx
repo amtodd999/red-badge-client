@@ -1,30 +1,23 @@
 import React from 'react';
 
 type MovieProps = {
-    updateToken: (newToken: string) => void
+    clearToken(): void,
+    sessionToken: string
 }
 
 type MovieState = {
-    TmdbId: number,
-    MovieTitle: string,
+    FilmTitle: string,
     Overview: string,
-    // ReleaseDt: Date,
-    OrigLang: string,
-    Subgenre: string,
     errorText: string
 }
 
 
-export default class Movie extends React.Component<MovieProps, MovieState>{
+export default class CreateMovie extends React.Component<MovieProps, MovieState>{
     constructor(props: MovieProps) {
         super(props)
         this.state = {
-            TmdbId: 0,
-            MovieTitle: '',
+            FilmTitle: '',
             Overview: '',
-            // ReleaseDt: '',
-            OrigLang: '',
-            Subgenre: '',
             errorText: ''
         }
     }
@@ -32,23 +25,19 @@ export default class Movie extends React.Component<MovieProps, MovieState>{
     handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const reqBody = {
-            movie: {
-                TmdbId: this.state.TmdbId,
-                MovieTitle: this.state.MovieTitle,
+            film: {
+                FilmTitle: this.state.FilmTitle,
                 Overview: this.state.Overview,
-                // ReleaseDt: this.state.ReleaseDt,
-                OrigLang: this.state.OrigLang,
-                Subgenre: this.state.Subgenre,
             }
         }
         console.log(reqBody)
         try {
-            const res = await fetch('http://localhost:3000/movie/create', {
+            const res = await fetch('http://localhost:3000/film/add', {
                 method: "POST",
                 body: JSON.stringify(reqBody),
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': `Bearer ${this.props.updateToken}`
+                    'Authorization': `Bearer ${this.props.sessionToken}`
                 },
             })
             console.log(res)
@@ -60,8 +49,8 @@ export default class Movie extends React.Component<MovieProps, MovieState>{
                 throw new Error(json.errors[0].message)
             } else {
                 console.log(json.Message);
-
             }
+            this.setState({ FilmTitle: '' })
         } catch (e) {
             console.log(e);
         }
@@ -76,10 +65,10 @@ export default class Movie extends React.Component<MovieProps, MovieState>{
                         <label htmlFor="movieTitle">Movie Title</label>
                         <input
                             type="text" className="form-control" placeholder="Enter movie title"
-                            onChange={(e) => this.setState({ MovieTitle: e.target.value })} name="movieTitle" value={this.state.MovieTitle} required
+                            onChange={(e) => this.setState({ FilmTitle: e.target.value })} name="FilmTitle" value={this.state.FilmTitle} required
                         />
                     </div>
-
+                    <br />
                     <button type="submit" className="btn btn-secondary btn-block">Submit</button>
 
                 </form>

@@ -19,16 +19,6 @@ export default class Auth extends React.Component<AuthProps, AuthState>{
         this.render = this.render.bind(this)
     }
 
-
-    loginToggle = (e: any) => {
-        e.preventDefault();
-        if (this.state.showLogin === false) {
-            return this.setState({
-                showLogin: true
-            });
-        }
-        console.log(this.state.showLogin)
-    }
     render() {
         return(
             
@@ -40,7 +30,7 @@ export default class Auth extends React.Component<AuthProps, AuthState>{
             <Login updateToken={this.props.updateToken}/>
             }
             <br />
-            <button onClick={(e) => {this.loginToggle(e);}}>
+            <button onClick={() => this.setState({showLogin: !this.state.showLogin})}>
                 {this.state.showLogin ? "Login" : "Sign Up"}
             </button>
 
@@ -49,18 +39,3 @@ export default class Auth extends React.Component<AuthProps, AuthState>{
     }
     
 }
-
-//     <div>
-        //     {
-        //     this.state.showLogin 
-        //     ? 
-        //     (<div><Signup updateToken={this.props.updateToken}/></div>)
-        //     : 
-        //     (<div><Login updateToken={this.props.updateToken}/></div>)
-        //     }
-        //     <br />
-        //     <button onClick={(e) => {this.loginToggle(e);}}>
-        //         {this.state.showLogin ? "Login" : "Sign Up"}
-        //     </button>
-
-        // </div> 

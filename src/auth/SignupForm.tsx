@@ -40,28 +40,22 @@ export default class Signup extends React.Component<Props, AuthState>{
             }
         }
         console.log(reqBody)
-        try {
-            const res = await fetch('http://localhost:3000/User/register', {
+        
+            fetch('http://localhost:3000/User/register', {
                 method: "POST",
                 body: JSON.stringify(reqBody),
-                headers: {
+                headers: new Headers({
                     "Content-Type": "application/json"
-                },
-            })
-            console.log( res)
-            const json = await res.json();
-            console.log(json)
-            if (json.errors) {
-                let errMsg = json.errors[0].message 
-                this.setState({ errorText: errMsg.charAt(0).toUpperCase() + errMsg.slice(1) + '.'})
-                throw new Error(json.errors[0].message)
-            } else {
-                console.log(json.Message);
-
-            }
-        } catch (e) {
-            console.log(e);
-        }
+                }),
+            }).then(
+                (response) => response.json()
+                ).then((data) => {
+                    this.props.updateToken(data.sessionToken);
+                    console.log(data.sessionToken)
+                })
+                .catch((err) => alert(err));
+            
+        
     }
     render() {
         return (
