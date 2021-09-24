@@ -1,17 +1,15 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
-import CreateMovie from './CreateMovie';
 
 type DisplayFilmProps = {
     sessionToken: string
-    clearToken: () => void
 }
 
 type DisplayFilmState = {
     filmData: Film[]
 }
 
-type Film = { FilmTitle: string, Overview: string }
+type Film = { id: number, FilmTitle: string, Overview: string }
 
 export default class DisplayMovies extends React.Component<DisplayFilmProps, DisplayFilmState> {
     constructor(props: DisplayFilmProps) {
@@ -38,6 +36,23 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
                 console.log(filmRes)
             })
     }
+//get a big error when I delete movies
+    deleteMovies = async (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+        e.preventDefault()
+        await fetch(`http://localhost:3000/film/delete/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${this.props.sessionToken}`
+            },
+        }).then((res) => res.json())
+            .then((filmRes) => {
+                this.setState({
+                    filmData: filmRes,
+                })
+                console.log(filmRes)
+            })
+    }
 
 
 
@@ -49,15 +64,18 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
     movieWrapper = (): JSX.Element[] => {
         return this.state.filmData.map((film: Film, index: number) => {
             return (
-                <Table hover>
+                
                     <tbody>
                         <tr key={index}>
                             <td>{film.FilmTitle}</td>
                             <td>{film.Overview}</td>
+                            <td>
+                                <Button color="secondary" size="sm" onClick={e => this.deleteMovies(e, film.id)}>Delete</Button>
+                            </td>
                         </tr>
 
                     </tbody>
-                </Table>
+                
 
             )
         })
@@ -68,16 +86,18 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
         // this.fetchMovies = this.fetchMovies.bind(this)
         return (
             <div>
-                <CreateMovie sessionToken={this.props.sessionToken} clearToken={this.props.clearToken} />
-                <Table hover>
-                <thead>
+
+
+                <Table dark bordered>
+                    <thead>
                         <tr>
                             <th>Title</th>
                             <th>Overview</th>
+                            <th>Movie Edits</th>
                         </tr>
                     </thead>
-                {this.movieWrapper()}
-                    </Table>
+                    {this.movieWrapper()}
+                </Table>
                 {/* <button onClick={this.fetchRatings}></button> */}
             </div>
         )

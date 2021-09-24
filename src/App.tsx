@@ -10,6 +10,7 @@ import Auth from './auth/Auth';
 import DisplayMovies from './movies/DisplayMovies';
 
 import { Menu } from './common';
+import Landing from './movies/Landing';
 
 
 type AppState = {
@@ -48,11 +49,15 @@ class App extends Component<{}, AppState> {
   protectedViews = () => {
     return (
       
+      // this.state.sessionToken === localStorage.getItem('sessionToken') ?
+      //   (<DisplayMovies 
+      //     sessionToken={this.state.sessionToken} 
+      //     clearToken={this.clearToken}
+      //     /> ) :
+      //   (<Auth updateToken={this.updateToken}/>)
       this.state.sessionToken === localStorage.getItem('sessionToken') ?
-        (<DisplayMovies 
-          sessionToken={this.state.sessionToken} 
-          clearToken={this.clearToken}
-          />) :
+        (<Landing sessionToken={this.state.sessionToken}
+          /> ) :
         (<Auth updateToken={this.updateToken}/>)
         
     )
@@ -64,7 +69,7 @@ class App extends Component<{}, AppState> {
     return (
       <div className="auth-wrapper">
         <Menu />
-        <div className="auth-inner">
+        <div>
         {/* <Auth updateToken={this.updateToken}/> */}
         {this.protectedViews()}
           {/* <Signup updateToken={this.updateToken} />

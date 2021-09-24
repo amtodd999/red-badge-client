@@ -1,7 +1,6 @@
 import React from 'react';
 
 type MovieProps = {
-    clearToken(): void,
     sessionToken: string
 }
 
@@ -66,6 +65,11 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
                         <input
                             type="text" className="form-control" placeholder="Enter movie title"
                             onChange={(e) => this.setState({ FilmTitle: e.target.value })} name="FilmTitle" value={this.state.FilmTitle} required
+                        />
+                        <label htmlFor="movieOverview">Movie Overview</label>
+                        <input
+                            type="text" className="form-control" placeholder="Brief overview of movie plot"
+                            onChange={(e) => this.setState({ Overview: e.target.value })} name="FilmOverview" value={this.state.Overview} required
                         />
                     </div>
                     <br />

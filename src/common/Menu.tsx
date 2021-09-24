@@ -16,12 +16,12 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         this.state = {
             collapsed: true
         }
-        // this.render = this.render.bind(this)
+        this.render = this.render.bind(this)
     }
 
-    // toggleMenu = () => {
-    //     this.setState({ collapsed: false })
-    // }
+    toggleMenu = () => {
+        this.setState({ collapsed: false })
+    }
 
     render() {
         return (
