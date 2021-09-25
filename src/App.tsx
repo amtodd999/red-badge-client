@@ -49,12 +49,6 @@ class App extends Component<{}, AppState> {
   protectedViews = () => {
     return (
       
-      // this.state.sessionToken === localStorage.getItem('sessionToken') ?
-      //   (<DisplayMovies 
-      //     sessionToken={this.state.sessionToken} 
-      //     clearToken={this.clearToken}
-      //     /> ) :
-      //   (<Auth updateToken={this.updateToken}/>)
       this.state.sessionToken === localStorage.getItem('sessionToken') ?
         (<Landing sessionToken={this.state.sessionToken}
           /> ) :

@@ -47,9 +47,7 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
             },
         }).then((res) => res.json())
             .then((filmRes) => {
-                this.setState({
-                    filmData: filmRes,
-                })
+                this.fetchMovies();
                 console.log(filmRes)
             })
     }
@@ -59,6 +57,7 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
     componentDidMount(): void {
         this.fetchMovies()
     }
+
 
 
     movieWrapper = (): JSX.Element[] => {
@@ -80,6 +79,8 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
             )
         })
     }
+
+
 
 
     render() {

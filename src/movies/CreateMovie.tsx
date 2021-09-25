@@ -49,7 +49,7 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
             } else {
                 console.log(json.Message);
             }
-            this.setState({ FilmTitle: '' })
+            this.setState({ FilmTitle: '', Overview: '' })
         } catch (e) {
             console.log(e);
         }

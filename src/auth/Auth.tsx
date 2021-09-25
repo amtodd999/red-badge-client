@@ -22,7 +22,7 @@ export default class Auth extends React.Component<AuthProps, AuthState>{
     render() {
         return(
             
-            <div>
+            <div className="auth-inner">
             {
             this.state.showLogin 
             ? <Signup updateToken={this.props.updateToken}/>
