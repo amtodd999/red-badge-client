@@ -9,7 +9,7 @@ import ReviewDisplay from '../reviews/ReviewDisplay';
 
 type ReviewIndexProps = {
     sessionToken: string,
-    filmToReview: filmType
+    filmToReview: film
 }
 
 type ReviewIndexState = {
@@ -115,8 +115,25 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
 
     render() {
         return (
-            <div></div>
-                
+            <div>
+                <div className="auth-inner">
+                    <ReviewCreate sessionToken={this.props.sessionToken}
+                    films={this.state.films} 
+                    filmToReview={this.props.filmToReview} 
+                    fetchReviews={this.fetchReviews}
+                    reviewWrapper={this.reviewWrapper}
+                    />
+                </div>
+            </div>
+            
+            //         <Col md="9">
+            //             {this.props.gameToReview &&
+            //                 <NoteDisplay games={this.state.games} notes={this.state.notes} token={this.props.token} gameToReview={this.props.gameToReview} fetchNotes={this.fetchNotes} updateOn={this.updateOn} editUpdateNote={this.editUpdateNote} noteMapper={this.noteMapper}
+            //                 />}
+            //         </Col>
+            //         {this.props.gameToReview && this.state.updateActive && this.state.noteToUpdate ? <NoteEdit noteToUpdate={this.state.noteToUpdate} updateOff={this.updateOff} token={this.props.token} fetchNotes={this.fetchNotes} gameToReview={this.props.gameToReview} /> : <></>}
+            //     </Row>
+            // </Container>
         )
     }
 }

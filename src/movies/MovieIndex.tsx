@@ -10,7 +10,7 @@ type MovieIndexProps = {
 
 
 
-export default class MovieIndexProps extends React.Component<MovieIndexProps, {}> {
+export default class MovieIndex extends React.Component<MovieIndexProps, {}> {
 
 
 
