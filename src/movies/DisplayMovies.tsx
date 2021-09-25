@@ -2,44 +2,26 @@ import React from 'react';
 import { Table, Button } from 'reactstrap';
 
 type DisplayFilmProps = {
-    sessionToken: string
+    sessionToken: string,
+    films: film[],
+    fetchMovies: () => void,
+    updateOn: () => void,
+    filmToUpdate: (films: film) => void
 }
 
-type DisplayFilmState = {
-    filmData: Film[]
-}
+type DisplayFilmState = {}
 
-type Film = { id: number, FilmTitle: string, Overview: string }
+type film = { id: number, FilmTitle: string, Overview: string }
 
 export default class DisplayMovies extends React.Component<DisplayFilmProps, DisplayFilmState> {
     constructor(props: DisplayFilmProps) {
         super(props)
-        this.state = {
-            filmData: []
-        }
-        this.render = this.render.bind(this)
+
     }
 
-
-    fetchMovies = async () => {
-        fetch('http://localhost:3000/film/myFilms', {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`
-            },
-        }).then((res) => res.json())
-            .then((filmRes) => {
-                this.setState({
-                    filmData: filmRes,
-                })
-                console.log(filmRes)
-            })
-    }
-//get a big error when I delete movies
-    deleteMovies = async (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
-        e.preventDefault()
-        await fetch(`http://localhost:3000/film/delete/${id}`, {
+    deleteMovies = async (film: film) => {
+        //e.preventDefault()
+        await fetch(`http://localhost:3000/film/delete/${film.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -47,44 +29,47 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
             },
         }).then((res) => res.json())
             .then((filmRes) => {
-                this.fetchMovies();
+                this.props.fetchMovies();
                 console.log(filmRes)
             })
     }
 
-
-
-    componentDidMount(): void {
-        this.fetchMovies()
-    }
-
-    getSingleMovie = async (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
-        e.preventDefault()
-        await fetch(`http://localhost:3000/film/${id}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`
-            },
-        }).then((res) => res.json())
-    }
-
+    // getSingleMovie = async (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+    //     e.preventDefault()
+    //     await fetch(`http://localhost:3000/film/${id}`, {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             'Authorization': `Bearer ${this.props.sessionToken}`
+    //         },
+    //     }).then((res) => res.json())
+    // }
 
     movieWrapper = (): JSX.Element[] => {
-        return this.state.filmData.map((film: Film, index: number) => {
+        return this.props.films.map((film: film, index: number) => {
             return (
-                    <tbody>
-                        <tr key={index}>
-                            <td>{film.FilmTitle}</td>
-                            <td>{film.Overview}</td>
-                            <td>
-                                <Button color="secondary" size="sm" onClick={e => this.deleteMovies(e, film.id)}>Delete</Button>
-                                <Button color="secondary" size="sm" onClick={e => this.getSingleMovie(e, film.id)}>Delete</Button>
-                            </td>
-                        </tr>
+                <tbody>
+                    <tr key={index}>
+                        <td>{film.FilmTitle}</td>
+                        <td>{film.Overview}</td>
+                        <td>
+                            <Button
+                                color="secondary"
+                                size="sm"
+                                onClick={e => this.deleteMovies(film.id)}>
+                            Delete
+                            </Button>
+                            <Button
+                                color="secondary"
+                                size="sm"
+                                onClick={e => this.getSingleMovie(e, film.id)}>
+                            Update
+                            </Button>
+                        </td>
+                    </tr>
 
-                    </tbody>
-                
+                </tbody>
+
 
             )
         })

@@ -1,9 +1,8 @@
 import React from 'react';
 
 type MovieProps = {
-    sessionToken: string
-    // ,
-    // fetchMovies: () => void
+    sessionToken: string,
+    fetchMovies: () => void
 }
 
 type MovieState = {
@@ -21,32 +20,74 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
             Overview: '',
             errorText: ''
         }
+        //https://www.freecodecamp.org/news/this-is-why-we-need-to-bind-event-handlers-in-class-components-in-react-f7ea1a6f93eb/
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
-handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault()
-    const reqBody = {
-                film: {
-                    FilmTitle: this.state.FilmTitle,
-                    Overview: this.state.Overview,
-                }
+    handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault()
+        const reqBody = {
+            film: {
+                FilmTitle: this.state.FilmTitle,
+                Overview: this.state.Overview,
             }
-            console.log(reqBody)
-    fetch('http://localhost:3000/film/add', {
-        method: "POST",
-        body: JSON.stringify(reqBody),
-        headers: new Headers({
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${this.props.sessionToken}`,
-                    }),
-    })
-                .then(res => res.json())
-                .then(mData => {
-                    console.log(mData)
-                    this.setState({ FilmTitle: '', Overview: '' })
-                })
-                // this.props.fetchMovies()
+        }
+        console.log(reqBody)
+        fetch('http://localhost:3000/film/add', {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: new Headers({
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${this.props.sessionToken}`,
+            }),
+        })
+            .then(res => res.json())
+            .then(mData => {
+                console.log(mData)
+                this.setState({ FilmTitle: '', Overview: '' })
+            })
+        this.props.fetchMovies()
+    }
 
+    render() {
+        return (
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <h3>Create a New Movie</h3>
+
+                    <div className="form-group">
+                        <label htmlFor="movieTitle">Movie Title</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter movie title"
+                            onChange={(e) => this.setState({ FilmTitle: e.target.value })}
+                            name="FilmTitle"
+                            value={this.state.FilmTitle}
+                            required
+                        />
+                        <label htmlFor="movieOverview">Movie Overview</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Brief overview of movie plot"
+                            onChange={(e) => this.setState({ Overview: e.target.value })}
+                            name="FilmOverview"
+                            value={this.state.Overview}
+                            required
+                        />
+                    </div>
+                    <br />
+                    <button type="submit" className="btn btn-secondary btn-block">
+                        Submit
+                    </button>
+
+                </form>
+            </div>
+        )
+    }
 }
+
+
     // handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     //     e.preventDefault()
     //     const reqBody = {
@@ -81,31 +122,4 @@ handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     //         console.log(e);
     //     }
     // }
-
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <h3>Create a New Movie</h3>
-
-                    <div className="form-group">
-                        <label htmlFor="movieTitle">Movie Title</label>
-                        <input
-                            type="text" className="form-control" placeholder="Enter movie title"
-                            onChange={(e) => this.setState({ FilmTitle: e.target.value })} name="FilmTitle" value={this.state.FilmTitle} required
-                        />
-                        <label htmlFor="movieOverview">Movie Overview</label>
-                        <input
-                            type="text" className="form-control" placeholder="Brief overview of movie plot"
-                            onChange={(e) => this.setState({ Overview: e.target.value })} name="FilmOverview" value={this.state.Overview} required
-                        />
-                    </div>
-                    <br />
-                    <button type="submit" className="btn btn-secondary btn-block">Submit</button>
-
-                </form>
-            </div>
-        )
-    }
-}
 

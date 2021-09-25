@@ -1,8 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 
-
-// import Search from '../navigation/Search'
 import ReviewCreate from '../reviews/ReviewCreate';
 import ReviewEdit from '../reviews/ReviewEdit';
 import ReviewDisplay from '../reviews/ReviewDisplay';
@@ -16,7 +14,7 @@ type ReviewIndexState = {
     films: film[],
     reviews: review[],
     updateActive: boolean,
-    reviewToUpdate: reviewType | null,
+    reviewToUpdate: review | null,
     filmId: number
 }
 
@@ -77,7 +75,7 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
     }
 
     reviewWrapper(): JSX.Element[] {
-        return this.state.reviews.map((review: ReviewIndexProps, index: number) => {
+        return this.state.reviews.map((review: review, index: number) => {
             return (
                 <tbody>
                     <tr key={index}>
@@ -85,7 +83,7 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
                         <td>{review.Review}</td>
                         <td>
                             <Button color="secondary" onClick={() => {
-                                this.selectReviewToEdit(review.id)
+                                this.selectReviewToEdit(review)
                                 this.updateOn()
                             }}>
                                 Update</Button>

@@ -14,7 +14,7 @@ type EditFilmState = {
 
 
 
-export class EditMovie extends React.Component<EditFilmProps, EditFilmState>{
+export default class EditMovie extends React.Component<EditFilmProps, EditFilmState>{
     constructor(props: EditFilmProps) {
         super(props)
         this.state = {
@@ -38,10 +38,10 @@ export class EditMovie extends React.Component<EditFilmProps, EditFilmState>{
         await fetch(`http://localhost:3000/film/update/${id}`, {
             method: "PUT",
             body: JSON.stringify(updateBody),
-            headers: {
+            headers: new Headers({
                 "Content-Type": "application/json",
                 'Authorization': `Bearer ${this.props.sessionToken}`
-            },
+            }),
         }).then((res) => res.json())
             .then((editRes) => {
                 this.setState({

@@ -9,7 +9,7 @@ type ReviewDisplayProps = {
     fetchReviews: () => void,
     updateOn: () => void,
     selectReviewToEdit: () => void,
-    reviewMapper: () => JSX.Element[]
+    reviewWrapper: () => JSX.Element[]
 
 }
 
