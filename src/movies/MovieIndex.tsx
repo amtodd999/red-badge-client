@@ -2,13 +2,15 @@ import React from 'react';
 import DisplayMovies from './DisplayMovies';
 import CreateMovie from './CreateMovie';
 
-type LandingProps = {
+type MovieIndexProps = {
     sessionToken: string
+    // ,
+    // fetchMovies: () => void
 }
 
 
 
-export default class Landing extends React.Component<LandingProps, {}> {
+export default class MovieIndexProps extends React.Component<MovieIndexProps, {}> {
 
 
 
@@ -17,6 +19,7 @@ export default class Landing extends React.Component<LandingProps, {}> {
             <div>
                 <div className="auth-inner">
 
+                    {/* <CreateMovie sessionToken={this.props.sessionToken} fetchMovies={this.props.fetchMovies}/> */}
                     <CreateMovie sessionToken={this.props.sessionToken} />
                 </div>
                 <br />

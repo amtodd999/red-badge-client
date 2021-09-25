@@ -10,7 +10,7 @@ import Auth from './auth/Auth';
 import DisplayMovies from './movies/DisplayMovies';
 
 import { Menu } from './common';
-import Landing from './movies/Landing';
+import Landing from './movies/MovieIndex';
 
 
 type AppState = {

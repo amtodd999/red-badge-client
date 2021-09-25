@@ -58,18 +58,28 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
         this.fetchMovies()
     }
 
+    getSingleMovie = async (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+        e.preventDefault()
+        await fetch(`http://localhost:3000/film/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${this.props.sessionToken}`
+            },
+        }).then((res) => res.json())
+    }
 
 
     movieWrapper = (): JSX.Element[] => {
         return this.state.filmData.map((film: Film, index: number) => {
             return (
-                
                     <tbody>
                         <tr key={index}>
                             <td>{film.FilmTitle}</td>
                             <td>{film.Overview}</td>
                             <td>
                                 <Button color="secondary" size="sm" onClick={e => this.deleteMovies(e, film.id)}>Delete</Button>
+                                <Button color="secondary" size="sm" onClick={e => this.getSingleMovie(e, film.id)}>Delete</Button>
                             </td>
                         </tr>
 

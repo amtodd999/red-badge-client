@@ -2,6 +2,8 @@ import React from 'react';
 
 type MovieProps = {
     sessionToken: string
+    // ,
+    // fetchMovies: () => void
 }
 
 type MovieState = {
@@ -20,40 +22,66 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
             errorText: ''
         }
     }
+handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
+    const reqBody = {
+                film: {
+                    FilmTitle: this.state.FilmTitle,
+                    Overview: this.state.Overview,
+                }
+            }
+            console.log(reqBody)
+    fetch('http://localhost:3000/film/add', {
+        method: "POST",
+        body: JSON.stringify(reqBody),
+        headers: new Headers({
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${this.props.sessionToken}`,
+                    }),
+    })
+                .then(res => res.json())
+                .then(mData => {
+                    console.log(mData)
+                    this.setState({ FilmTitle: '', Overview: '' })
+                })
+                // this.props.fetchMovies()
 
-    handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const reqBody = {
-            film: {
-                FilmTitle: this.state.FilmTitle,
-                Overview: this.state.Overview,
-            }
-        }
-        console.log(reqBody)
-        try {
-            const res = await fetch('http://localhost:3000/film/add', {
-                method: "POST",
-                body: JSON.stringify(reqBody),
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': `Bearer ${this.props.sessionToken}`
-                },
-            })
-            console.log(res)
-            const json = await res.json();
-            console.log(json)
-            if (json.errors) {
-                let errMsg = json.errors[0].message
-                this.setState({ errorText: errMsg.charAt(0).toUpperCase() + errMsg.slice(1) + '.' })
-                throw new Error(json.errors[0].message)
-            } else {
-                console.log(json.Message);
-            }
-            this.setState({ FilmTitle: '', Overview: '' })
-        } catch (e) {
-            console.log(e);
-        }
-    }
+}
+    // handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault()
+    //     const reqBody = {
+    //         film: {
+    //             FilmTitle: this.state.FilmTitle,
+    //             Overview: this.state.Overview,
+    //         }
+    //     }
+    //     console.log(reqBody)
+    //     try {
+    //         const res = await fetch('http://localhost:3000/film/add', {
+    //             method: "POST",
+    //             body: JSON.stringify(reqBody),
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 'Authorization': `Bearer ${this.props.sessionToken}`
+    //             },
+    //         })
+    //         console.log(res)
+    //         const json = await res.json();
+    //         console.log(json)
+    //         if (json.errors) {
+    //             let errMsg = json.errors[0].message
+    //             this.setState({ errorText: errMsg.charAt(0).toUpperCase() + errMsg.slice(1) + '.' })
+    //             throw new Error(json.errors[0].message)
+    //         } else {
+    //             console.log(json.Message);
+    //         }
+    //         this.setState({ FilmTitle: '', Overview: '' })
+    //         // this.props.fetchMovies()
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
+
     render() {
         return (
             <div>
