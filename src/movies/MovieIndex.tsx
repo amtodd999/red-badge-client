@@ -2,7 +2,6 @@ import React from 'react';
 import DisplayMovies from './DisplayMovies';
 import CreateMovie from './CreateMovie';
 import EditMovie from './EditMovie';
-import ReviewIndex from '../reviews/ReviewIndex';
 
 type MovieIndexProps = {
     sessionToken: string
@@ -10,12 +9,9 @@ type MovieIndexProps = {
 
 type MovieIndexState = {
     films: film[],
-    reviews: review[],
     updateActive: boolean,
     filmToUpdate: {[key: string]: string} ,
-    reviewToUpdate: review | null,
-    selectedFilm: film | null,
-    selectedReview: review | null
+    selectedFilm: film | null
 }
 
 type film = {
@@ -24,23 +20,14 @@ type film = {
     Overview: string
 }
 
-type review = {
-    id: number,
-    Review: string,
-    Flagged: boolean
-}
-
 export default class MovieIndex extends React.Component<MovieIndexProps, MovieIndexState> {
     constructor(props: MovieIndexProps) {
         super(props)
         this.state = {
             films: [],
-            reviews: [],
             updateActive: false,
             filmToUpdate: {},
-            reviewToUpdate: null,
-            selectedFilm: null,
-            selectedReview: null
+            selectedFilm: null
         }
         //need to bind to call this function in the return
         this.fetchMovies = this.fetchMovies.bind(this)
@@ -74,15 +61,11 @@ export default class MovieIndex extends React.Component<MovieIndexProps, MovieIn
         this.setState({ updateActive: false })
     }
 
-
-
-
     componentDidMount(): void {
         this.fetchMovies()
     }
 
     render() {
-
         return (
             <div>
                 <div className="auth-inner">
@@ -115,13 +98,13 @@ export default class MovieIndex extends React.Component<MovieIndexProps, MovieIn
                     /> :
                     <></>
                 }
-                <div>
+                {/* <div>
                  
                     <ReviewIndex 
                     sessionToken={this.props.sessionToken}
                     // filmToReview={this.state.selectedFilm}
                     />
-                </div>
+                </div> */}
 </div>
         )
     }

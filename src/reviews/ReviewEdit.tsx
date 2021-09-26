@@ -1,100 +1,76 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { ReviewCreateState } from './ReviewCreate';
 
 type ReviewEditProps = {
     sessionToken: string,
-    filmToReview: Film,
-    reviewToUpdate: review,
-    fetchReviews: () => void,
-    updateOff: () => void
+    updateOff: () => void,
+    reviewToUpdate: { [key: string]: string },
+    fetchReviews: () => void
 }
 
-type ReviewEditState = {
-    Review: string,
-    reviewId: number
-}
-
-type Film = {
-    id: number,
-    FilmTitle: string,
-    Overview: string
-}
-
-type review = {
-    id: number,
-    Review: string,
-    Flagged: boolean
+interface ReviewEditState extends ReviewCreateState {
+    isModalVisible: boolean
 }
 
 export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewEditState> {
     constructor(props: ReviewEditProps) {
         super(props)
         this.state = {
-            Review: '',
-            reviewId: this.props.reviewToUpdate.id
+            isModalVisible: true,
+            Review: this.props.reviewToUpdate.Review || ''
         }
 
     }
 
-    // editReview(e: React.FormEvent<HTMLFormElement>): void => { 
-    //     e.preventDefault()
-    //     fetch(`http://localhost:3000/review/update/${this.props.reviewToUpdate.id}`, {
-    //         method: "PUT",
-    //         body: JSON.stringify({ Review: this.state.Review }),
-    //         headers: new Headers({
-    //             "Content-Type": "application/json",
-    //             'Authorization': `Bearer ${this.props.sessionToken}`
-    //         }),
-    //     })
-    //     .then(res => res.json())
-
-    // }
-
-    editReview = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault()
-
-        fetch(`http://localhost:3000/review/update/${this.props.reviewToUpdate.id}`, {
+    editReview = async () => {
+        const updateBody = {
+            review: {
+                Review: this.state.Review
+            }
+        }
+        await fetch(`http://localhost:3000/review/update/${this.props.reviewToUpdate.id}`, {
             method: "PUT",
-            body: JSON.stringify({ Review: this.state.Review }),
+            body: JSON.stringify(updateBody),
             headers: new Headers({
                 "Content-Type": "application/json",
                 'Authorization': `Bearer ${this.props.sessionToken}`,
             }),
         })
             .then(res => res.json())
-        this.props.fetchReviews()
-        this.props.updateOff()
-        // .then(rData => {
-        //     console.log(rData)
-        //     this.setState({ FilmTitle: '', Overview: '' })
-        // })
+            .then((editRes) => {
+                this.setState({ Review: '' })
+                this.props.updateOff()
+                this.props.fetchReviews()
+                console.log(editRes)
+            })
     }
 
+    modalToggle = () => {
+        this.setState({ isModalVisible: false })
+        this.props.updateOff()
+    }
 
     render() {
         return (
-            <Modal>
-                <ModalHeader>Edit Review</ModalHeader>
+            <Modal isOpen={this.state.isModalVisible} toggle={this.modalToggle}>
+                <ModalHeader toggle={this.modalToggle}>Edit Review</ModalHeader>
                 <ModalBody>
-                    <form onSubmit={this.editReview}>
-                        <h3>testing Other Header</h3>
-
-                        <div className="form-group">
-                            <label htmlFor="Review">Movie Review</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="Review"
-                                placeholder="Update your review here"
-                                onChange={(e) => this.setState({ Review: e.target.value })}
-                                value={this.state.Review}
-                            // required
-                            />
-                        </div>
-                        <br />
-                        <button type="submit" className="btn btn-secondary btn-block">Submit</button>
-
-                    </form>
+                    <div className="form-group">
+                        <label htmlFor="Review">Updated Review</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="UpdatedReview"
+                            placeholder="Update your review here"
+                            onChange={(e) => this.setState({ Review: e.target.value })}
+                            value={this.state.Review}
+                        // required
+                        />
+                    </div>
+                    <button type="submit"
+                        className="btn btn-secondary btn-block"
+                        onClick={e => this.editReview()}>Submit</button>
                 </ModalBody>
             </Modal>
         )

@@ -10,7 +10,6 @@ export interface MovieState  {
     Overview: string
 }
 
-
 export default class CreateMovie extends React.Component<MovieProps, MovieState>{
     constructor(props: MovieProps) {
         super(props)

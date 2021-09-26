@@ -77,16 +77,9 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
             )
         })
     }
-
-
-
-
     render() {
-        // this.fetchMovies = this.fetchMovies.bind(this)
         return (
             <div>
-
-
                 <Table dark bordered>
                     <thead>
                         <tr>

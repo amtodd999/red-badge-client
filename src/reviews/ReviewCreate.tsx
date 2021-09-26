@@ -2,32 +2,20 @@ import React from 'react';
 
 type ReviewCreateProps = {
     sessionToken: string,
-    //need the movies to tie to reviews
-    films: film[],
-    // filmToReview: film,
     fetchReviews: () => void
-    reviewWrapper: () => JSX.Element[]
 }
 
-type ReviewCreateState = {
-    // filmId: number,
+export interface ReviewCreateState  {
     Review: string
-}
-
-type film = {
-    id: number,
-    FilmTitle: string,
-    Overview: string
 }
 
 export default class ReviewCreate extends React.Component<ReviewCreateProps, ReviewCreateState>{
     constructor(props: ReviewCreateProps) {
         super(props)
         this.state = {
-            // filmId: this.props.filmToReview.id,
-            // filmId: 0,
             Review: ''
         }
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -52,25 +40,29 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
                 this.setState({ Review: '' })
             })
         this.props.fetchReviews()
-        this.props.reviewWrapper()
     }
     render() {
         return (
             <div>
-<form onSubmit={this.handleSubmit}>
-    <h3>Review a Movie</h3>
-
-    <div className="form-group">
-        <label htmlFor="movieReview">Review</label>
-        <input
-        name="MovieReview"
-        onChange={(e) => this.setState({Review: e.target.value})}
-        value={this.state.Review}
-        />        
-    </div>
-    <br />
-    <button type="submit" className="btn btn-secondary btn-block">Submit</button>
-</form>
+                <form onSubmit={this.handleSubmit}>
+                    <h3>Review a Movie</h3>
+                    <div className="form-group">
+                        <label htmlFor="movieReview">Review</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="MovieReview"
+                            placeholder="Enter your review here"
+                            onChange={(e) => this.setState({ Review: e.target.value })}
+                            value={this.state.Review}
+                            required
+                        />
+                    </div>
+                    <br />
+                    <button type="submit" className="btn btn-secondary btn-block">
+                        Submit
+                    </button>
+                </form>
             </div>
         )
     }
