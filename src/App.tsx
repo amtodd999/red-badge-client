@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-// import Signup from './auth/SignupForm';
-// import Login from './auth/LoginForm';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Auth from './auth/Auth';
-
-import DisplayMovies from './movies/DisplayMovies';
-
-import { Menu } from './common';
-import Landing from './movies/MovieIndex';
+import Menu from './common/Menu';
+import ReviewIndex from './reviews/ReviewIndex';
+import MovieIndex from './movies/MovieIndex';
 
 
 type AppState = {
@@ -22,7 +18,7 @@ class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props)
     this.state = {
-      sessionToken: '',
+      sessionToken: ''
     }
   }
 
@@ -48,12 +44,19 @@ class App extends Component<{}, AppState> {
 
   protectedViews = () => {
     return (
-      
+
       this.state.sessionToken === localStorage.getItem('sessionToken') ?
-        (<Landing sessionToken={this.state.sessionToken}
-          /> ) :
-        (<Auth updateToken={this.updateToken}/>)
-        
+        (<div>
+          {/* <Menu 
+          sessionToken={this.state.sessionToken} 
+          clearToken={this.clearToken}
+          /> */}
+          <Router>
+          <MovieIndex sessionToken={this.state.sessionToken}/>  
+          </Router></div>)
+        :
+        (<Auth updateToken={this.updateToken} />)
+
     )
 
   }
@@ -61,14 +64,26 @@ class App extends Component<{}, AppState> {
 
   render() {
     return (
+      <div>
+        {this.state.sessionToken && (
+          <Menu 
+          sessionToken={this.state.sessionToken}
+          clearToken={this.clearToken}
+          />
+        )}
       <div className="auth-wrapper">
-        <Menu />
-        <div>
-        {/* <Auth updateToken={this.updateToken}/> */}
-        {this.protectedViews()}
-          {/* <Signup updateToken={this.updateToken} />
-          <Login updateToken={this.updateToken} /> */}
-        </div>
+        <Switch>
+          <Route exact path= '/'>
+          {this.protectedViews()}
+          </Route>
+        <Route exact path= '/movies'>
+          <MovieIndex sessionToken={this.state.sessionToken}/>
+        </Route>
+        <Route exact path= '/reviews'>
+          <ReviewIndex sessionToken={this.state.sessionToken}/>
+        </Route>
+        </Switch>
+      </div>
       </div>
     )
   }

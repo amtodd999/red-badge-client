@@ -1,46 +1,68 @@
-import React from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-// import logo from '../logo.svg'
+import React from 'react'
+import { Switch, Link } from 'react-router-dom'
+import {
+    Button,
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    Nav,
+    NavItem,
+    NavLink,
+    NavbarText,
+    NavbarBrand,
+} from 'reactstrap';
+import {Admin} from './Admin';
 
 type MenuProps = {
-//added this in but don't know why I need it
-}
-type MenuState = {
-    collapsed: boolean
+    sessionToken: string,
+    clearToken: () => void
 }
 
-export class Menu extends React.Component<MenuProps, MenuState> {
-    constructor(props:MenuProps) {
-        super(props);
+type MenuTypes = {
+    isDisplayed: boolean
+}
 
+export default class Menu extends React.Component<MenuProps, MenuTypes> {
+    constructor(props: MenuProps) {
+        super(props)
         this.state = {
-            collapsed: true
+            isDisplayed: false
         }
-        this.render = this.render.bind(this)
     }
 
-    toggleMenu = () => {
-        this.setState({ collapsed: false })
-    }
+    toggle = () => this.setState({ isDisplayed: !this.state.isDisplayed })
 
     render() {
         return (
             <div>
-                <Navbar color="faded" light>
-                    <NavbarBrand href="/" className="mr-auto">reactstrap</NavbarBrand>
-                    {/* <NavbarToggler onClick={() => this.setState({ collapsed: !this.state.collapsed })} className="mr-2" /> */}
-                    <NavbarToggler color="white" className="mr-2 color-navtoggle" />
-                    {/* <Collapse isOpen={!collapsed} navbar> */}
-                    <Collapse  navbar>
-                        <Nav navbar>
+                <Navbar light expand="md">
+                    <NavbarToggler onClick={this.toggle} />
+                    <Collapse isOpen={this.state.isDisplayed} navbar>
+                        <Nav className='mr-auto' navbar>
                             <NavItem>
-                                <NavLink href="/components/">Components</NavLink>
+                                <NavLink>
+                                    <Link to='/' className='text-muted'>
+                                        Home
+                                    </Link>
+                                </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                                <NavLink>
+                                    <Link to='/movies' className='text-muted'>
+                                        Movies
+                                    </Link>
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink>
+                                    <Link to='/reviews' className='text-muted'>
+                                        Reviews
+                                    </Link>
+                                </NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>
+                    <Button color="secondary" size="sm" onClick={this.props.clearToken}>Logout</Button>
                 </Navbar>
             </div>
         )

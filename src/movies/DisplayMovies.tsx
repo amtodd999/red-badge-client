@@ -3,25 +3,34 @@ import { Table, Button } from 'reactstrap';
 
 type DisplayFilmProps = {
     sessionToken: string,
-    films: film[],
+    films: filmObj[],
     fetchMovies: () => void,
     updateOn: () => void,
-    filmToUpdate: (films: film) => void
+    editUpdateFilms: (editFilm: any)=> void
 }
 
-type DisplayFilmState = {}
+type DisplayFilmState = {
+    titleUpdate: string,
+    overviewUpdate: string
+}
 
-type film = { id: number, FilmTitle: string, Overview: string }
+
+type filmObj = { id: number, FilmTitle: string, Overview: string }
 
 export default class DisplayMovies extends React.Component<DisplayFilmProps, DisplayFilmState> {
     constructor(props: DisplayFilmProps) {
         super(props)
-
+        this.state = {
+            titleUpdate: '',
+            overviewUpdate: ''
+        }
     }
 
-    deleteMovies = async (film: film) => {
+
+
+    deleteMovies = async (deleteFilm: filmObj) => {
         //e.preventDefault()
-        await fetch(`http://localhost:3000/film/delete/${film.id}`, {
+        await fetch(`http://localhost:3000/film/delete/${deleteFilm.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -34,19 +43,10 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
             })
     }
 
-    // getSingleMovie = async (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
-    //     e.preventDefault()
-    //     await fetch(`http://localhost:3000/film/${id}`, {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             'Authorization': `Bearer ${this.props.sessionToken}`
-    //         },
-    //     }).then((res) => res.json())
-    // }
 
     movieWrapper = (): JSX.Element[] => {
-        return this.props.films.map((film: film, index: number) => {
+        return this.props.films.map((film: filmObj, index: number) => {
+            console.log("LOOK" + film)
             return (
                 <tbody>
                     <tr key={index}>
@@ -56,14 +56,17 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
                             <Button
                                 color="secondary"
                                 size="sm"
-                                onClick={e => this.deleteMovies(film.id)}>
-                            Delete
+                                onClick={e => {
+                                    this.props.editUpdateFilms(film)
+                                    this.props.updateOn()
+                                }}>
+                                Update
                             </Button>
                             <Button
                                 color="secondary"
                                 size="sm"
-                                onClick={e => this.getSingleMovie(e, film.id)}>
-                            Update
+                                onClick={e => this.deleteMovies(film)}>
+                                Delete
                             </Button>
                         </td>
                     </tr>

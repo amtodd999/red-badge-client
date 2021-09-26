@@ -5,10 +5,9 @@ type MovieProps = {
     fetchMovies: () => void
 }
 
-type MovieState = {
+export interface MovieState  {
     FilmTitle: string,
-    Overview: string,
-    errorText: string
+    Overview: string
 }
 
 
@@ -17,8 +16,7 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
         super(props)
         this.state = {
             FilmTitle: '',
-            Overview: '',
-            errorText: ''
+            Overview: ''
         }
         //https://www.freecodecamp.org/news/this-is-why-we-need-to-bind-event-handlers-in-class-components-in-react-f7ea1a6f93eb/
         this.handleSubmit = this.handleSubmit.bind(this)

@@ -4,13 +4,13 @@ type ReviewCreateProps = {
     sessionToken: string,
     //need the movies to tie to reviews
     films: film[],
-    filmToReview: film,
+    // filmToReview: film,
     fetchReviews: () => void
     reviewWrapper: () => JSX.Element[]
 }
 
 type ReviewCreateState = {
-    filmId: number,
+    // filmId: number,
     Review: string
 }
 
@@ -24,7 +24,8 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
     constructor(props: ReviewCreateProps) {
         super(props)
         this.state = {
-            filmId: this.props.filmToReview.id,
+            // filmId: this.props.filmToReview.id,
+            // filmId: 0,
             Review: ''
         }
     }

@@ -5,7 +5,7 @@ type ReviewDisplayProps = {
     sessionToken: string,
     films: film[],
     reviews: review[],
-    filmToReview: film,
+    // filmToReview: film,
     fetchReviews: () => void,
     updateOn: () => void,
     selectReviewToEdit: () => void,
@@ -33,7 +33,8 @@ export default class ReviewDisplay extends React.Component<ReviewDisplayProps, R
     constructor(props: ReviewDisplayProps) {
         super(props)
         this.state = {
-            reviewId: this.props.filmToReview.id
+            // reviewId: this.props.filmToReview.id
+            reviewId: 0
         }
     }
 

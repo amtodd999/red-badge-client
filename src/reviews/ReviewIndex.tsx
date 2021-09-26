@@ -6,8 +6,9 @@ import ReviewEdit from '../reviews/ReviewEdit';
 import ReviewDisplay from '../reviews/ReviewDisplay';
 
 type ReviewIndexProps = {
-    sessionToken: string,
-    filmToReview: film
+    sessionToken: string
+    // ,
+    // filmToReview: film 
 }
 
 type ReviewIndexState = {
@@ -117,7 +118,7 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
                 <div className="auth-inner">
                     <ReviewCreate sessionToken={this.props.sessionToken}
                     films={this.state.films} 
-                    filmToReview={this.props.filmToReview} 
+                    // filmToReview={this.props.filmToReview} 
                     fetchReviews={this.fetchReviews}
                     reviewWrapper={this.reviewWrapper}
                     />

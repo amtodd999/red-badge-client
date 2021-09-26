@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 type ReviewEditProps = {
     sessionToken: string,
-    filmToReview: film,
+    filmToReview: Film,
     reviewToUpdate: review,
     fetchReviews: () => void,
     updateOff: () => void
@@ -14,7 +14,7 @@ type ReviewEditState = {
     reviewId: number
 }
 
-type film = {
+type Film = {
     id: number,
     FilmTitle: string,
     Overview: string

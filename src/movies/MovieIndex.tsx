@@ -12,11 +12,10 @@ type MovieIndexState = {
     films: film[],
     reviews: review[],
     updateActive: boolean,
-    filmToUpdate: film | null,
+    filmToUpdate: {[key: string]: string} ,
     reviewToUpdate: review | null,
     selectedFilm: film | null,
-    selectedReview: review | null,
-    filmToReview: film | null
+    selectedReview: review | null
 }
 
 type film = {
@@ -31,22 +30,21 @@ type review = {
     Flagged: boolean
 }
 
-export default class MovieIndex extends React.Component<MovieIndexProps, {}> {
+export default class MovieIndex extends React.Component<MovieIndexProps, MovieIndexState> {
     constructor(props: MovieIndexProps) {
         super(props)
         this.state = {
             films: [],
             reviews: [],
             updateActive: false,
-            filmToUpdate: null,
+            filmToUpdate: {},
             reviewToUpdate: null,
             selectedFilm: null,
-            selectedReview: null,
-            filmToReview: null
+            selectedReview: null
         }
         //need to bind to call this function in the return
         this.fetchMovies = this.fetchMovies.bind(this)
-        this.updateOff = this.updateOff(this)
+        this.updateOff = this.updateOff.bind(this)
     }
 
     fetchMovies = async () => {
@@ -61,12 +59,11 @@ export default class MovieIndex extends React.Component<MovieIndexProps, {}> {
                 this.setState({
                     films: filmRes,
                 })
-                console.log(filmRes)
             })
     }
 
-    selectFilmToEdit = (films: film): void => {
-        this.setState({ filmToUpdate: films })
+    editUpdateFilms = (editFilm: any) => {
+        this.setState({filmToUpdate: editFilm})
     }
 
     updateOn = (): void => {
@@ -77,9 +74,7 @@ export default class MovieIndex extends React.Component<MovieIndexProps, {}> {
         this.setState({ updateActive: false })
     }
 
-    pickSelectedFilm = (f: film) => this.setState({ selectedFilm: f })
-    pickSelectedReview = (r: review) => this.setState({ selectedReview: f })
-    pickFilmToReview = (f: film) => this.setState({ filmToReview: f })
+
 
 
     componentDidMount(): void {
@@ -102,18 +97,17 @@ export default class MovieIndex extends React.Component<MovieIndexProps, {}> {
                 <div>
 
                     <DisplayMovies
+                        films={this.state.films}
                         sessionToken={this.props.sessionToken}
-                        selectFilmToEdit={this.selectFilmToEdit}
+                        editUpdateFilms={this.editUpdateFilms}
                         updateOn={this.updateOn}
-                        updateOff={this.updateOff}
-                        pickSelectedFilm={this.pickSelectedFilm}
                         fetchMovies={this.fetchMovies}
                     />
                 </div>
                 {/* check to see if we are updating and if the film was grabbed */}
-                {this.state.updateActive && this.state.filmToUpdate ?
+                {this.state.updateActive  ?
                     <EditMovie
-                        sessionToken={this.sessionToken}
+                        sessionToken={this.props.sessionToken}
                         filmToUpdate={this.state.filmToUpdate}
                         updateOff={this.updateOff}
                         fetchMovies={this.fetchMovies}
@@ -122,11 +116,11 @@ export default class MovieIndex extends React.Component<MovieIndexProps, {}> {
                     <></>
                 }
                 <div>
-                {this.state.pickSelectedFilm && 
+                 
                     <ReviewIndex 
                     sessionToken={this.props.sessionToken}
-                    filmToReview={this.state.selectedFilm}
-                    />}
+                    // filmToReview={this.state.selectedFilm}
+                    />
                 </div>
 </div>
         )
