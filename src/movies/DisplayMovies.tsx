@@ -46,7 +46,6 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
 
     movieWrapper = (): JSX.Element[] => {
         return this.props.films.map((film: filmObj, index: number) => {
-            console.log("LOOK" + film)
             return (
                 <tbody>
                     <tr key={index}>

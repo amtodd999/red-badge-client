@@ -2,7 +2,8 @@ import React from 'react';
 
 
 type Props = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string) => void,
+    updateAdmin: (newAdmin: string) => void
 }
 
 interface AuthState {
@@ -41,9 +42,15 @@ export default class Login extends React.Component<Props, AuthState>{
                     if (response.status !== 200) {
                         throw new Error('Unable to login');
                     } else return response.json();
+                    
                 }).then((data) => {
+                    const admin = "" + (data.User.isAdmin)
+                    console.log(admin)
+                    console.log(typeof admin)
                     this.props.updateToken(data.sessionToken);
+                    this.props.updateAdmin(admin)
                     console.log(data.sessionToken)
+                    console.log(data)
                 })
                 .catch((err) => alert(err));
 
@@ -80,42 +87,3 @@ export default class Login extends React.Component<Props, AuthState>{
         )
     }
 }
-
-
-// handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault()
-    //     const reqBody = {
-    //         User: {
-    //             email: this.state.email,
-    //             password: this.state.password
-    //         }
-    //     }
-
-    //     try {
-    //         const res = await fetch('http://localhost:3000/User/login', {
-    //             method: "POST",
-    //             body: JSON.stringify(reqBody),
-    //             headers: new Headers({
-    //                 "Content-Type": "application/json"
-    //             }),
-    //         })
-    //         console.log( res)
-    //         const json = await res.json();
-    //         console.log(json)
-    //         if (json.errors) {
-    //             let errMsg = json.errors[0].message 
-    //             this.setState({ errorText: errMsg.charAt(0).toUpperCase() + errMsg.slice(1) + '.'})
-    //             throw new Error(json.errors[0].message)
-    //         } else {
-    //             console.log(json.message);
-    //             return (
-    //                 res.json()
-    //                 // data() => {
-    //                 //     this.props.updateToken(data.sessionToken)
-    //                 // }
-    //                 );
-
-    //         }
-    //     } catch (e) {
-    //         console.log(e);
-    //     }

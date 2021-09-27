@@ -11,11 +11,11 @@ import {
     NavbarText,
     NavbarBrand,
 } from 'reactstrap';
-import {Admin} from './Admin';
 
 type MenuProps = {
     sessionToken: string,
-    clearToken: () => void
+    clearToken: () => void,
+    isAdmin: string | null
 }
 
 type MenuTypes = {
@@ -31,6 +31,22 @@ export default class Menu extends React.Component<MenuProps, MenuTypes> {
     }
 
     toggle = () => this.setState({ isDisplayed: !this.state.isDisplayed })
+
+    showAdmin = () => {
+        return this.props.isAdmin === 'true' 
+        ? 
+        (
+            <NavItem>
+                                <NavLink>
+                                    <Link to='/admin' className='text-muted'>
+                                        Admin Page
+                                    </Link>
+                                </NavLink>
+                            </NavItem>
+        )
+        :
+        (<></>)
+    }
 
     render() {
         return (
@@ -60,6 +76,7 @@ export default class Menu extends React.Component<MenuProps, MenuTypes> {
                                     </Link>
                                 </NavLink>
                             </NavItem>
+                            {this.showAdmin()}
                         </Nav>
                     </Collapse>
                     <Button color="secondary" size="sm" onClick={this.props.clearToken}>Logout</Button>

@@ -3,7 +3,8 @@ import Signup from './SignupForm';
 import Login from './LoginForm';
 
 type AuthProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string) => void,
+    updateAdmin: (newAdmin: string) => void
 }
 
 type AuthState = {
@@ -27,7 +28,10 @@ export default class Auth extends React.Component<AuthProps, AuthState>{
             this.state.showLogin 
             ? <Signup updateToken={this.props.updateToken}/>
             : 
-            <Login updateToken={this.props.updateToken}/>
+            <Login 
+            updateToken={this.props.updateToken}
+            updateAdmin={this.props.updateAdmin}
+            />
             }
             <br />
             <button onClick={() => this.setState({showLogin: !this.state.showLogin})}>

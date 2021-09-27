@@ -7,10 +7,12 @@ import Auth from './auth/Auth';
 import Menu from './common/Menu';
 import ReviewIndex from './reviews/ReviewIndex';
 import MovieIndex from './movies/MovieIndex';
+import Admin from './common/Admin';
 
 
 type AppState = {
-  sessionToken: string
+  sessionToken: string,
+  isAdmin: string | null
 }
 
 
@@ -18,7 +20,8 @@ class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props)
     this.state = {
-      sessionToken: ''
+      sessionToken: '',
+      isAdmin: ''
     }
   }
 
@@ -28,7 +31,10 @@ class App extends Component<{}, AppState> {
         sessionToken: localStorage.getItem('sessionToken')!,
       })
     }
-    console.log(this.state.sessionToken)
+    if (localStorage.getItem('admin')) {
+      this.setState({ isAdmin: localStorage.getItem('admin') })
+    }
+    console.log(this.state.isAdmin)
   }
 
   updateToken = (newToken: string): void => {
@@ -36,6 +42,13 @@ class App extends Component<{}, AppState> {
     this.setState({ sessionToken: newToken })
     console.log(this.state.sessionToken + " updated token")
   }
+
+  updateAdmin = (newAdmin: string): void => {
+    localStorage.setItem('admin', newAdmin);
+    this.setState({ isAdmin: newAdmin })
+  }
+
+
 
   clearToken = () => {
     localStorage.clear()
@@ -47,15 +60,11 @@ class App extends Component<{}, AppState> {
 
       this.state.sessionToken === localStorage.getItem('sessionToken') ?
         (<div>
-          {/* <Menu 
-          sessionToken={this.state.sessionToken} 
-          clearToken={this.clearToken}
-          /> */}
           <Router>
-          <MovieIndex sessionToken={this.state.sessionToken}/>  
+            <MovieIndex sessionToken={this.state.sessionToken} />
           </Router></div>)
         :
-        (<Auth updateToken={this.updateToken} />)
+        (<Auth updateToken={this.updateToken} updateAdmin={this.updateAdmin} />)
 
     )
 
@@ -66,24 +75,38 @@ class App extends Component<{}, AppState> {
     return (
       <div>
         {this.state.sessionToken && (
-          <Menu 
-          sessionToken={this.state.sessionToken}
-          clearToken={this.clearToken}
+          <Menu
+            sessionToken={this.state.sessionToken}
+            clearToken={this.clearToken}
+            isAdmin={this.state.isAdmin}
           />
         )}
-      <div className="auth-wrapper">
-        <Switch>
-          <Route exact path= '/'>
-          {this.protectedViews()}
-          </Route>
-        <Route exact path= '/movies'>
-          <MovieIndex sessionToken={this.state.sessionToken}/>
-        </Route>
-        <Route exact path= '/reviews'>
-          <ReviewIndex sessionToken={this.state.sessionToken}/>
-        </Route>
-        </Switch>
-      </div>
+        <div className="auth-wrapper">
+          <Switch>
+            <Route exact path='/'>
+              {this.protectedViews()}
+            </Route>
+            <Route exact path='/movies'>
+              <MovieIndex sessionToken={this.state.sessionToken} />
+            </Route>
+            <Route exact path='/reviews'>
+              <ReviewIndex sessionToken={this.state.sessionToken} />
+            </Route>
+            {/* This restricts a user from typing /admin  */}
+            {this.state.isAdmin === "true"
+              ? (
+                <Route exact path='/admin'>
+                  <Admin sessionToken={this.state.sessionToken} />
+                </Route>)
+              : (<Redirect to="/" />)
+
+            }
+        // <Route exact path='/admin'>
+        //   <Admin sessionToken={this.state.sessionToken} />
+        // </Route>
+
+          </Switch>
+        </div>
       </div>
     )
   }
