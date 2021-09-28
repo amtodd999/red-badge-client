@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import {GlobalStyle} from './GlobalStyle';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
@@ -70,10 +71,9 @@ class App extends Component<{}, AppState> {
 
   }
 
-
   render() {
     return (
-      <div>
+      <GlobalStyle>
         {this.state.sessionToken && (
           <Menu
             sessionToken={this.state.sessionToken}
@@ -81,7 +81,7 @@ class App extends Component<{}, AppState> {
             isAdmin={this.state.isAdmin}
           />
         )}
-        <div className="auth-wrapper">
+        <div>
           <Switch>
             <Route exact path='/'>
               {this.protectedViews()}
@@ -101,13 +101,13 @@ class App extends Component<{}, AppState> {
               : (<Redirect to="/" />)
 
             }
-        // <Route exact path='/admin'>
-        //   <Admin sessionToken={this.state.sessionToken} />
-        // </Route>
+         {/* <Route exact path='/admin'>
+           <Admin sessionToken={this.state.sessionToken} />
+         </Route> */}
 
           </Switch>
         </div>
-      </div>
+      </GlobalStyle>
     )
   }
 }

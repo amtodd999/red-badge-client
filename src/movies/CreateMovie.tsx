@@ -1,4 +1,5 @@
 import React from 'react';
+import {MovieFormStyle} from './MovieFormStyle';
 
 type MovieProps = {
     sessionToken: string,
@@ -48,10 +49,10 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
     render() {
         return (
             <div>
+            <MovieFormStyle>
                 <form onSubmit={this.handleSubmit}>
                     <h3>Create a New Movie</h3>
-
-                    <div className="form-group">
+                    <div >
                         <label htmlFor="movieTitle">Movie Title</label>
                         <input
                             type="text"
@@ -62,6 +63,7 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
                             value={this.state.FilmTitle}
                             required
                         />
+                        
                         <label htmlFor="movieOverview">Movie Overview</label>
                         <input
                             type="text"
@@ -73,12 +75,13 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
                             required
                         />
                     </div>
-                    <br />
-                    <button type="submit" className="btn btn-secondary btn-block">
+                    
+                    <button type="submit" >
                         Submit
                     </button>
 
                 </form>
+            </MovieFormStyle>
             </div>
         )
     }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Button } from 'reactstrap';
+import styled from 'styled-components';
+import {AdminTableStyle, AdminHeaderStyle} from './AdminTableStyle';
 
 type AdminProps = {
     sessionToken: string
@@ -63,15 +64,13 @@ export default class Admin extends React.Component<AdminProps, AdminState>{
                         <td>{user.id}</td>
                         <td>{user.email}</td>
                         <td>
-                            <Button
-                                color="secondary"
-                                size="sm"
+                            <button
                                 onClick={e => {
                                     if (window.confirm('Are you sure you wish to delete this user?'))
                                         this.deleteUsers(user)
                                 }}>
                                 Delete
-                            </Button>
+                            </button>
                         </td>
                     </tr>
 
@@ -83,9 +82,9 @@ export default class Admin extends React.Component<AdminProps, AdminState>{
     render() {
         return (
             <div>
-                <h1 className="admin-table">Manage Users</h1>
+                <AdminHeaderStyle >Manage Users</AdminHeaderStyle>
                 <div>
-                    <Table dark bordered>
+                    <AdminTableStyle>
                         <thead>
                             <tr>
                                 <th>User ID</th>
@@ -94,10 +93,10 @@ export default class Admin extends React.Component<AdminProps, AdminState>{
                             </tr>
                         </thead>
                         {this.userWrapper()}
-                    </Table>
+                    </AdminTableStyle>
                 </div>
             </div>
         )
     }
-
 }
+

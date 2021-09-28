@@ -1,4 +1,5 @@
 import React from 'react';
+import {ReviewFormStyle} from './ReviewFormStyle';
 
 type ReviewCreateProps = {
     sessionToken: string,
@@ -44,9 +45,10 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
     render() {
         return (
             <div>
+                <ReviewFormStyle>
                 <form onSubmit={this.handleSubmit}>
                     <h3>Review a Movie</h3>
-                    <div className="form-group">
+                    <div>
                         <label htmlFor="movieReview">Review</label>
                         <input
                             type="text"
@@ -59,10 +61,11 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
                         />
                     </div>
                     <br />
-                    <button type="submit" className="btn btn-secondary btn-block">
+                    <button type="submit">
                         Submit
                     </button>
                 </form>
+                </ReviewFormStyle>
             </div>
         )
     }

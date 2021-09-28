@@ -17,8 +17,12 @@ type ReviewIndexState = {
 type review = {
     id: number,
     Review: string,
-    // Flagged: boolean,
-    filmId: number
+    filmId: number,
+    film: filmObj
+}
+
+type filmObj = {
+    FilmTitle: string
 }
 
 export default class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
@@ -47,6 +51,7 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
                     reviews: reviewRes,
                 })
                 console.log(reviewRes)
+                console.log(this.state.reviews)
             })
     }
     //this is like editUpdateWorkout in workout log WorkoutIndex

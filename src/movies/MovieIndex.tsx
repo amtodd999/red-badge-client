@@ -68,7 +68,7 @@ export default class MovieIndex extends React.Component<MovieIndexProps, MovieIn
     render() {
         return (
             <div>
-                <div className="auth-inner">
+                <div>
 
                     {/* <CreateMovie sessionToken={this.props.sessionToken} fetchMovies={this.props.fetchMovies}/> */}
                     <CreateMovie
@@ -76,7 +76,7 @@ export default class MovieIndex extends React.Component<MovieIndexProps, MovieIn
                         fetchMovies={this.fetchMovies}
                     />
                 </div>
-                <br />
+               
                 <div>
 
                     <DisplayMovies

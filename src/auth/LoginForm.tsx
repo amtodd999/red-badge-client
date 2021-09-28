@@ -1,4 +1,6 @@
 import React from 'react';
+import { Wrapper } from './AuthStyling';
+
 
 
 type Props = {
@@ -42,7 +44,7 @@ export default class Login extends React.Component<Props, AuthState>{
                     if (response.status !== 200) {
                         throw new Error('Unable to login');
                     } else return response.json();
-                    
+
                 }).then((data) => {
                     const admin = "" + (data.User.isAdmin)
                     console.log(admin)
@@ -61,29 +63,58 @@ export default class Login extends React.Component<Props, AuthState>{
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <h3>User Login</h3>
+            <Wrapper>
+                <div>
+                <h5>User Login</h5>
+                    <form onSubmit={this.handleSubmit}>
+                        <div >
+                            <label htmlFor="email">Email address</label>
+                            <input
+                                type="email" 
+                                className="form-control" placeholder="Enter email"
+                                onChange={(e) => this.setState({ email: e.target.value })} name="email" value={this.state.email} required
+                            />
+                        </div>
 
-                    <div className="form-group">
-                        <label htmlFor="email">Email address</label>
-                        <input
-                            type="email" className="form-control" placeholder="Enter email"
-                            onChange={(e) => this.setState({ email: e.target.value })} name="email" value={this.state.email} required
-                        />
-                    </div>
+                        <div>
+                            <label>Password</label>
+                            <input
+                                type="password" className="form-control" placeholder="Enter password"
+                                onChange={(e) => this.setState({ password: e.target.value })} name="password" value={this.state.password} required
+                            />
+                        </div>
+                        <button type="submit">Submit</button>
 
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input
-                            type="password" className="form-control" placeholder="Enter password"
-                            onChange={(e) => this.setState({ password: e.target.value })} name="password" value={this.state.password} required
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-secondary btn-block">Submit</button>
+                    </form>
+                </div>
 
-                </form>
-            </div>
+            </Wrapper>
+
+            // <div>
+            //     <form onSubmit={this.handleSubmit}>
+            //         <h3 style={{ color: "red" }}>User Login</h3>
+
+            //         <div className="form-group">
+            //             <label htmlFor="email">Email address</label>
+            //             <input
+            //                 type="email" className="form-control" placeholder="Enter email"
+            //                 onChange={(e) => this.setState({ email: e.target.value })} name="email" value={this.state.email} required
+            //             />
+            //         </div>
+
+            //         <div className="form-group">
+            //             <label>Password</label>
+            //             <input
+            //                 type="password" className="form-control" placeholder="Enter password"
+            //                 onChange={(e) => this.setState({ password: e.target.value })} name="password" value={this.state.password} required
+            //             />
+            //         </div>
+            //         <Button variant="outlined" onClick={this.handleSubmit}>Submit</Button>
+
+            //     </form>
+            // </div>
+
+
         )
     }
 }

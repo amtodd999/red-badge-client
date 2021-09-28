@@ -1,6 +1,8 @@
 import React from 'react';
+import { Wrapper } from './AuthStyling';
 import Signup from './SignupForm';
 import Login from './LoginForm';
+
 
 type AuthProps = {
     updateToken: (newToken: string) => void,
@@ -14,32 +16,41 @@ type AuthState = {
 export default class Auth extends React.Component<AuthProps, AuthState>{
     constructor(props: AuthProps) {
         super(props);
-        this.state ={
+        this.state = {
             showLogin: false
         }
         this.render = this.render.bind(this)
     }
 
     render() {
-        return(
-            
-            <div className="auth-inner">
-            {
-            this.state.showLogin 
-            ? <Signup updateToken={this.props.updateToken}/>
-            : 
-            <Login 
-            updateToken={this.props.updateToken}
-            updateAdmin={this.props.updateAdmin}
-            />
-            }
-            <br />
-            <button onClick={() => this.setState({showLogin: !this.state.showLogin})}>
-                {this.state.showLogin ? "Login" : "Sign Up"}
-            </button>
+        return (
 
-        </div>    
+            <Wrapper>
+                
+                    {
+                        this.state.showLogin
+                            ? <Signup updateToken={this.props.updateToken} />
+                            :
+                            <Login
+                                updateToken={this.props.updateToken}
+                                updateAdmin={this.props.updateAdmin}
+                            />
+                    }
+                    <br />
+                    {/* <form className="login" style={{ backgroundColor: '#f1f1f1' }}> */}
+
+                        {this.state.showLogin
+                            ? <h5>Already have an account? Go to login page</h5>
+                            : <h5>Don't have a login? Create an account</h5>
+                        }
+
+                        <button onClick={() => this.setState({ showLogin: !this.state.showLogin })}>
+                            {this.state.showLogin ? "Login" : "Sign Up"}
+                        </button>
+                    {/* </form> */}
+                
+            </Wrapper>
         )
     }
-    
+
 }

@@ -1,19 +1,18 @@
 import React from 'react';
-import { Table, Button } from 'reactstrap';
+import { MovieTableStyle } from './MovieTableStyle';
 
 type DisplayFilmProps = {
     sessionToken: string,
     films: filmObj[],
     fetchMovies: () => void,
     updateOn: () => void,
-    editUpdateFilms: (editFilm: any)=> void
+    editUpdateFilms: (editFilm: any) => void
 }
 
 type DisplayFilmState = {
     titleUpdate: string,
     overviewUpdate: string
 }
-
 
 type filmObj = { id: number, FilmTitle: string, Overview: string }
 
@@ -25,8 +24,6 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
             overviewUpdate: ''
         }
     }
-
-
 
     deleteMovies = async (deleteFilm: filmObj) => {
         //e.preventDefault()
@@ -47,120 +44,52 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
     movieWrapper = (): JSX.Element[] => {
         return this.props.films.map((film: filmObj, index: number) => {
             return (
+
                 <tbody>
                     <tr key={index}>
                         <td>{film.FilmTitle}</td>
                         <td>{film.Overview}</td>
                         <td>
-                            <Button
-                                color="secondary"
-                                size="sm"
+                            <button
                                 onClick={e => {
                                     this.props.editUpdateFilms(film)
                                     this.props.updateOn()
                                 }}>
                                 Update
-                            </Button>
-                            <Button
-                                color="secondary"
-                                size="sm"
+                            </button>
+                        </td>
+                        <td>
+                        <button
                                 onClick={e => this.deleteMovies(film)}>
                                 Delete
-                            </Button>
+                            </button>
                         </td>
                     </tr>
-
                 </tbody>
-
-
             )
         })
     }
     render() {
         return (
             <div>
-                <Table dark bordered>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Overview</th>
-                            <th>Movie Edits</th>
-                        </tr>
-                    </thead>
-                    {this.movieWrapper()}
-                </Table>
-                {/* <button onClick={this.fetchRatings}></button> */}
+                <h3 id="movieTitles" >Movies</h3>
+                <MovieTableStyle>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Overview</th>
+                                <th>Update Movie</th>
+                                <th>Delete Movie</th>
+                            </tr>
+                        </thead>
+                        {this.movieWrapper()}
+                        <br />
+                    </table>
+                    {/* <button onClick={this.fetchRatings}></button> */}
+                </MovieTableStyle>
             </div>
         )
     }
 }
 
-
-
-
-     // try {
-        //     const res = await 
-        //     Promise.all([
-        //         fetch('http://localhost:3000/movie/', {
-        //             method: "GET",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //                 'Authorization': `Bearer ${this.props.sessionToken}`
-        //             },
-        //         }),
-
-        //         fetch('http://localhost:3000/review/myReviews', {
-        //             method: "GET",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //                 'Authorization': `Bearer ${this.props.sessionToken}`
-        //             },
-        //         }),
-
-        //         fetch('http://localhost:3000/rating/myRatings', {
-        //             method: "GET",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //                 'Authorization': `Bearer ${this.props.sessionToken}`
-        //             },
-        //         })
-        //     ]);
-        //     const data = await Promise.all(res.map(r => res.json()))
-        //     console.log(data.flat());
-        // } catch {
-        //     throw Error("you suck")
-        // }
-
-            //https://stackoverflow.com/questions/46241827/fetch-api-requesting-multiple-get-requests
-    // fetchReviews = () => {
-
-    //     fetch('http://localhost:3000/review/myReviews', {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             'Authorization': `Bearer ${this.props.sessionToken}`
-    //         },
-    //     }).then((res) => res.json())
-    //         .then((reviewData) => this.setState({
-    //             reviewData: reviewData,
-    //         }))
-    // }
-
-    // fetchRatings = () => {
-
-    //     fetch('http://localhost:3000/rating/myRatings', {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             'Authorization': `Bearer ${this.props.sessionToken}`
-    //         },
-    //     }).then((res) => res.json())
-    //         .then((ratingData) => this.setState({
-    //             ratingData: ratingData,
-    //         }))
-    // }
-
-    //     fetchAsyncData = async () => {
-    //         const response = await Promise.all([this.fetchMovies(), this.fetchRatings(), this.fetchReviews()]);
-    //         console.log(response)
-    //     }

@@ -1,5 +1,7 @@
 import React from 'react'
-import { Switch, Link } from 'react-router-dom'
+import { Switch, Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { FaTimes } from 'react-icons/fa';
 import {
     Button,
     Collapse,
@@ -51,17 +53,10 @@ export default class Menu extends React.Component<MenuProps, MenuTypes> {
     render() {
         return (
             <div>
-                <Navbar light expand="md">
+                <Navbar dark expand="md">
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isDisplayed} navbar>
                         <Nav className='mr-auto' navbar>
-                            <NavItem>
-                                <NavLink>
-                                    <Link to='/' className='text-muted'>
-                                        Home
-                                    </Link>
-                                </NavLink>
-                            </NavItem>
                             <NavItem>
                                 <NavLink>
                                     <Link to='/movies' className='text-muted'>
@@ -79,9 +74,19 @@ export default class Menu extends React.Component<MenuProps, MenuTypes> {
                             {this.showAdmin()}
                         </Nav>
                     </Collapse>
-                    <Button color="secondary" size="sm" onClick={this.props.clearToken}>Logout</Button>
+                    <NavItem>
+                                <NavLink>
+                                    <Link to='/' className='text-white'
+                                    onClick={this.props.clearToken}>
+                                        Logout
+                                    </Link>
+                                </NavLink>
+                            </NavItem>
+                    {/* <Button color="secondary" size="sm" onClick={this.props.clearToken}>Logout</Button> */}
                 </Navbar>
+                
             </div>
         )
     }
 }
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button } from 'reactstrap';
+import { ReviewTableStyle } from './ReviewTableStyle';
 
 type ReviewDisplayProps = {
     sessionToken: string,
@@ -16,8 +16,12 @@ type ReviewDisplayState = {
 type reviewObj = {
     id: number,
     Review: string,
-    // Flagged: boolean,
-    filmId: number
+    filmId: number,
+    film: filmObj
+}
+
+type filmObj = {
+    FilmTitle: string
 }
 
 export default class ReviewDisplay extends React.Component<ReviewDisplayProps, ReviewDisplayState>{
@@ -44,28 +48,26 @@ export default class ReviewDisplay extends React.Component<ReviewDisplayProps, R
 
     reviewWrapper(): JSX.Element[] {
         return this.props.reviews.map((review: reviewObj, index: number) => {
+            // const title = review.find(film => film.FilmTitle)
             return (
                 <tbody>
                     <tr key={index}>
-                        <td>{review.id}</td>
+                        <td>{review.film.FilmTitle}</td>
                         <td>{review.Review}</td>
-                        <td>{review.filmId}</td>
                         <td>
-                            <Button
-                                color="secondary"
-                                size="sm"
+                            <button
                                 onClick={e => {
                                     this.props.editUpdateReviews(review)
                                     this.props.updateOn()
                                 }}>
                                 Update
-                            </Button>
-                            <Button
-                                color="secondary"
-                                size="sm"
+                            </button>
+                        </td>
+                        <td>
+                            <button
                                 onClick={e => this.deleteReview(review)}>
                                 Delete
-                            </Button>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -75,16 +77,20 @@ export default class ReviewDisplay extends React.Component<ReviewDisplayProps, R
     render() {
         return (
             <div>
-                <Table dark bordered>
-                    <thead>
-                        <tr>
-                            <th>Review ID</th>
-                            <th>Review</th>
-                            <th>Film ID</th>
-                        </tr>
-                    </thead>
-                    {this.reviewWrapper()}
-                </Table>
+                <h3 id="movieTitles">Reviews</h3>
+                <ReviewTableStyle>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Film</th>
+                                <th>Review </th>
+                                <th>Update Review</th>
+                                <th>Delete Review</th>
+                            </tr>
+                        </thead>
+                        {this.reviewWrapper()}
+                    </table>
+                </ReviewTableStyle>
                 {/* <button onClick={this.fetchRatings}></button> */}
             </div>
         )
