@@ -23,6 +23,7 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
     }
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
+        const myToken = localStorage.getItem('sessionToken');
         const reqBody = {
             film: {
                 FilmTitle: this.state.FilmTitle,
@@ -35,7 +36,7 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
             body: JSON.stringify(reqBody),
             headers: new Headers({
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`,
+                'Authorization': `Bearer ${myToken}`,
             }),
         })
             .then(res => res.json())

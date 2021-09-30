@@ -25,6 +25,7 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
     }
 
     editReview = async () => {
+        const myToken = localStorage.getItem('sessionToken');
         const updateBody = {
             review: {
                 Review: this.state.Review
@@ -35,7 +36,7 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
             body: JSON.stringify(updateBody),
             headers: new Headers({
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`,
+                'Authorization': `Bearer ${myToken}`,
             }),
         })
             .then(res => res.json())

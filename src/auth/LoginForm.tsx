@@ -48,8 +48,7 @@ export default class Login extends React.Component<Props, AuthState>{
                 }).then((data) => {
                     const admin = "" + (data.User.isAdmin)
                     this.props.updateToken(data.sessionToken);
-                    this.props.updateAdmin(admin)
-            
+                    this.props.updateAdmin(admin)            
                 })
                 .catch((err) => alert(err));
 

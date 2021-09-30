@@ -12,7 +12,8 @@ type ReviewIndexState = {
     updateActive: boolean,
     reviewToUpdate: { [key: string]: string },
     filmToReview: { [key: string]: string },
-    films: movie[]
+    films: movie[],
+    createActive: boolean
 }
 
 type movie = {
@@ -33,7 +34,8 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
             updateActive: false,
             reviewToUpdate: {},
             filmToReview: {},
-            films: []
+            films: [],
+            createActive: false
         }
         // this.fetchReviews = this.fetchReviews.bind(this)
         this.updateOff = this.updateOff.bind(this)
@@ -58,18 +60,20 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
     // }
 
     fetchMoviesForReview = async () => {
+        const myToken = localStorage.getItem('sessionToken');
+        console.log(myToken);
         fetch('http://localhost:3000/film/myFilms', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`
+                'Authorization': `Bearer ${myToken}`
             },
         }).then((res) => res.json())
             .then((filmRes) => {
                 this.setState({
                     films: filmRes,
                 })
-                console.log(filmRes)
+                // console.log(filmRes)
             })
     }
 
@@ -90,6 +94,10 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
         this.setState({ updateActive: false })
     }
 
+    createOn = (): void => {
+        this.setState({ createActive: true })
+    }
+
     componentDidMount(): void {
         this.fetchMoviesForReview()
     }
@@ -106,6 +114,7 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
                         films={this.state.films}
                         editUpdateReviews={this.editUpdateReviews}
                         updateOn={this.updateOn}
+                        createOn={this.createOn}
                     />
                 </div>
                 <br />

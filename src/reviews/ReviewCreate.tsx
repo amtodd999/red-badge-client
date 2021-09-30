@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ReviewMap from './ReviewMap';
 import { ReviewTableStyle } from './ReviewTableStyle';
 
 
@@ -10,13 +10,13 @@ type ReviewCreateProps = {
     editUpdateReviews: (editReview: any) => void,
     updateOn: () => void,
     filmToReview: { [key: string]: string },
-    films: movie[]
+    films: movie[],
+    createOn: () => void
 }
 
 export interface ReviewCreateState {
     Review: string,
-    SelectFilm: string,
-    CreatActive: boolean
+    SelectFilm: string
 }
 
 type movie = {
@@ -34,18 +34,18 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
         super(props)
         this.state = {
             Review: '',
-            SelectFilm: '',
-            CreatActive: false
+            SelectFilm: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     deleteReview = async (deleteReview: singleReview) => {
+        const myToken = localStorage.getItem('sessionToken');
         await fetch(`http://localhost:3000/review/delete/${deleteReview.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`
+                'Authorization': `Bearer ${myToken}`
             },
         }).then((res) => res.json())
             .then((revRes) => {
@@ -54,20 +54,23 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
             })
     }
 
+    
+
     reviewWrapper(): JSX.Element[] {
+        
         return this.props.films.map((film: movie, index: number) => {
-            console.log(film.reviews)
+            
             return (
                 <tbody>
                     <tr key={index}>
                         <td>{film.FilmTitle}</td>
+                    <ReviewMap bleh={this.props.films}/>
                         
-                        <td>{film.reviews.map(review => review.Review)}</td>
                         <td>
                             <button
                                 onClick={e => {
                                     this.props.grabFilmForReview(film)
-                                    this.createOn()
+                                    this.props.createOn()
                                 }}>
                                 Review
                             </button>
@@ -94,12 +97,11 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
         })
     }
 
-    createOn = (): void => {
-        this.setState({ CreateActive: true })
-    }
+
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
+        const myToken = localStorage.getItem('sessionToken');
         const reqBody = {
             review: {
                 MovieId: this.state.SelectFilm,
@@ -112,7 +114,7 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
             body: JSON.stringify(reqBody),
             headers: new Headers({
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`,
+                'Authorization': `Bearer ${myToken}`,
             }),
         })
             .then(res => res.json())
@@ -125,7 +127,6 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
 
 
     render() {
-
         return (
             <div>
 <h3 id="movieTitles">Reviews</h3>

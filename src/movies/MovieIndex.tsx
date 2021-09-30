@@ -36,11 +36,12 @@ export default class MovieIndex extends React.Component<MovieIndexProps, MovieIn
     }
 
     fetchMovies = async () => {
+        const myToken = localStorage.getItem('sessionToken');
         fetch('http://localhost:3000/film/myFilms', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`
+                'Authorization': `Bearer ${myToken}`
             },
         }).then((res) => res.json())
             .then((filmRes) => {

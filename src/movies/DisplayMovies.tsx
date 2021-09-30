@@ -27,11 +27,12 @@ export default class DisplayMovies extends React.Component<DisplayFilmProps, Dis
 
     deleteMovies = async (deleteFilm: filmObj) => {
         //e.preventDefault()
+        const myToken = localStorage.getItem('sessionToken');
         await fetch(`http://localhost:3000/film/delete/${deleteFilm.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${this.props.sessionToken}`
+                'Authorization': `Bearer ${myToken}`
             },
         }).then((res) => res.json())
             .then((filmRes) => {
