@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MovieFormStyle = styled.form`
+export const MovieFormStyle = styled.div`
 display: flex;
     flex-direction: column;
     font-family: 'Metal Mania', cursive;

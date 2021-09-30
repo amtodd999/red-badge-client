@@ -8,52 +8,75 @@ type ReviewIndexProps = {
 }
 
 type ReviewIndexState = {
-    reviews: review[],
+    // reviews: review[],
     updateActive: boolean,
-    reviewToUpdate: {[key: string]: string},
-    selectedReview: review | null
+    reviewToUpdate: { [key: string]: string },
+    filmToReview: { [key: string]: string },
+    films: movie[]
 }
 
-type review = {
+type movie = {
     id: number,
-    Review: string,
-    filmId: number,
-    film: filmObj
+    FilmTitle: string,
+    reviews: revFilm[]
 }
 
-type filmObj = {
-    FilmTitle: string
+type revFilm = {
+    id: number,
+    Review: string
 }
 
 export default class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
     constructor(props: ReviewIndexProps) {
         super(props)
         this.state = {
-            reviews: [],
             updateActive: false,
             reviewToUpdate: {},
-            selectedReview: null
+            filmToReview: {},
+            films: []
         }
-        this.fetchReviews = this.fetchReviews.bind(this)
+        // this.fetchReviews = this.fetchReviews.bind(this)
         this.updateOff = this.updateOff.bind(this)
+        this.fetchMoviesForReview = this.fetchMoviesForReview.bind(this)
     }
 
-    fetchReviews = async () => {
-        fetch('http://localhost:3000/review/myReviews', {
+    // fetchReviews = async () => {
+    //     fetch('http://localhost:3000/review/myReviews', {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             'Authorization': `Bearer ${this.props.sessionToken}`
+    //         },
+    //     }).then((res) => res.json())
+    //         .then((reviewRes) => {
+    //             this.setState({
+    //                 reviews: reviewRes,
+    //             })
+    //             console.log(reviewRes)
+    //             console.log(this.state.reviews)
+    //         })
+    // }
+
+    fetchMoviesForReview = async () => {
+        fetch('http://localhost:3000/film/myFilms', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization': `Bearer ${this.props.sessionToken}`
             },
         }).then((res) => res.json())
-            .then((reviewRes) => {
+            .then((filmRes) => {
                 this.setState({
-                    reviews: reviewRes,
+                    films: filmRes,
                 })
-                console.log(reviewRes)
-                console.log(this.state.reviews)
+                console.log(filmRes)
             })
     }
+
+    grabFilmForReview = (filmReview: any) => {
+        this.setState({ filmToReview: filmReview })
+    }
+
     //this is like editUpdateWorkout in workout log WorkoutIndex
     editUpdateReviews = (editReview: any) => {
         this.setState({ reviewToUpdate: editReview })
@@ -68,7 +91,7 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
     }
 
     componentDidMount(): void {
-        this.fetchReviews()
+        this.fetchMoviesForReview()
     }
 
     render() {
@@ -77,25 +100,30 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
                 <div className="auth-inner">
                     <ReviewCreate
                         sessionToken={this.props.sessionToken}
-                        fetchReviews={this.fetchReviews}
+                        fetchMoviesForReview={this.fetchMoviesForReview}
+                        filmToReview={this.state.filmToReview}
+                        grabFilmForReview={this.grabFilmForReview}
+                        films={this.state.films}
+                        editUpdateReviews={this.editUpdateReviews}
+                        updateOn={this.updateOn}
                     />
                 </div>
                 <br />
                 <div>
-                    <ReviewDisplay
-                        reviews={this.state.reviews}
+                    {/* <ReviewDisplay
                         sessionToken={this.props.sessionToken}
                         fetchReviews={this.fetchReviews}
+                        fetchMoviesForReview={this.fetchMoviesForReview}
                         editUpdateReviews={this.editUpdateReviews}
                         updateOn={this.updateOn}
-                    />
+                    /> */}
                 </div>
                 {this.state.updateActive ?
                     <ReviewEdit
                         sessionToken={this.props.sessionToken}
                         reviewToUpdate={this.state.reviewToUpdate}
                         updateOff={this.updateOff}
-                        fetchReviews={this.fetchReviews}
+                        fetchMoviesForReview={this.fetchMoviesForReview}
                     /> :
                     <></>
                 }

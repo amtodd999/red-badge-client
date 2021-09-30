@@ -76,7 +76,7 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
                         />
                     </div>
                     
-                    <button type="submit" >
+                    <button type="submit">
                         Submit
                     </button>
 

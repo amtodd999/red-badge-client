@@ -57,6 +57,13 @@ export default class Menu extends React.Component<MenuProps, MenuTypes> {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isDisplayed} navbar>
                         <Nav className='mr-auto' navbar>
+                        <NavItem>
+                                <NavLink>
+                                    <Link to='/home' className='text-muted'>
+                                        Home
+                                    </Link>
+                                </NavLink>
+                            </NavItem>
                             <NavItem>
                                 <NavLink>
                                     <Link to='/movies' className='text-muted'>

@@ -9,6 +9,7 @@ import Menu from './common/Menu';
 import ReviewIndex from './reviews/ReviewIndex';
 import MovieIndex from './movies/MovieIndex';
 import Admin from './common/Admin';
+import Home from './common/Home';
 
 
 type AppState = {
@@ -62,7 +63,8 @@ class App extends Component<{}, AppState> {
       this.state.sessionToken === localStorage.getItem('sessionToken') ?
         (<div>
           <Router>
-            <MovieIndex sessionToken={this.state.sessionToken} />
+            {/* <MovieIndex sessionToken={this.state.sessionToken} /> */}
+            <Home sessionToken={this.state.sessionToken} />
           </Router></div>)
         :
         (<Auth updateToken={this.updateToken} updateAdmin={this.updateAdmin} />)
@@ -85,6 +87,9 @@ class App extends Component<{}, AppState> {
           <Switch>
             <Route exact path='/'>
               {this.protectedViews()}
+            </Route>
+            <Route exact path='/home'>
+            <Home sessionToken={this.state.sessionToken} />
             </Route>
             <Route exact path='/movies'>
               <MovieIndex sessionToken={this.state.sessionToken} />

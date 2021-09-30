@@ -50,7 +50,6 @@ export default class Signup extends React.Component<Props, AuthState>{
             (response) => response.json()
         ).then((data) => {
             this.props.updateToken(data.sessionToken);
-            console.log(data.sessionToken)
         })
             .catch((err) => alert(err));
 

@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 export const MovieTableStyle = styled.table`
-    border: 1px solid #ccc;
+    top-border: 1px solid #ccc;
     border-collapse: collapse;
     margin: 0;
-    padding-bottom: 35px;
     width: 100%;
     table-layout: fixed;    
 
@@ -24,7 +23,8 @@ export const MovieTableStyle = styled.table`
 
 
   tr {
-    background-color: #f8f8f8
+    
+    top-border: 1px solid #ccc;
     padding: .35em;
     
   }
@@ -33,6 +33,7 @@ export const MovieTableStyle = styled.table`
     padding: .625em;
     text-align: left;
     color: #D3D3D3;
+    
     
   }
   

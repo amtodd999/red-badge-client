@@ -6,7 +6,7 @@ type ReviewEditProps = {
     sessionToken: string,
     updateOff: () => void,
     reviewToUpdate: { [key: string]: string },
-    fetchReviews: () => void
+    fetchMoviesForReview: () => void
 }
 
 interface ReviewEditState extends ReviewCreateState {
@@ -18,7 +18,8 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
         super(props)
         this.state = {
             isModalVisible: true,
-            Review: this.props.reviewToUpdate.Review || ''
+            Review: '',
+            SelectFilm: ''
         }
 
     }
@@ -41,7 +42,7 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
             .then((editRes) => {
                 this.setState({ Review: '' })
                 this.props.updateOff()
-                this.props.fetchReviews()
+                this.props.fetchMoviesForReview()
                 console.log(editRes)
             })
     }

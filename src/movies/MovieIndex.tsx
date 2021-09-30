@@ -12,6 +12,7 @@ type MovieIndexState = {
     updateActive: boolean,
     filmToUpdate: {[key: string]: string} ,
     selectedFilm: film | null
+    
 }
 
 type film = {
