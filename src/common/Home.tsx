@@ -1,5 +1,6 @@
 import { url } from 'inspector';
 import { AutoComplete } from 'material-ui';
+import {HomeStyle} from './HomeStyling';
 import React from 'react';
 import IzutuLogo from '../assets/izutuLogowhite.svg'
 
@@ -10,23 +11,22 @@ type HomeProps = {
 export default class Home extends React.Component<HomeProps, {}>{
 
 
-
     render() {
         return (
+            <HomeStyle>
             <div>
-                <img src={IzutuLogo} style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }} />
+                <img id="izutuLogo" src={IzutuLogo} style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }} />
                 <div style={{ textAlign: 'center' }}>
-                    <h3 style={{ color: '#A9A9A9', fontFamily: "font-family: 'Roboto Mono', monospace"}}>
-                        What's your favorite scary movie?
-                    </h3>
-                    <h3>
+                    <h5 id="poemLine1">Violets are blue,</h5>
+                    <h5 id="poemLine2">your blood is red.</h5>
+                    <h5 id="poemLine3">The window was open</h5>
+                    <h5 id="poemLine4">I'm under your bed.</h5>
 
-                    </h3>
 
                 </div>
 
             </div>
-
+            </HomeStyle>
         )
     }
 }

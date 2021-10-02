@@ -26,7 +26,13 @@ export default class Auth extends React.Component<AuthProps, AuthState>{
         return (
 
             <Wrapper>
-                
+                <h2 style={{ color: '#F0FFFF', fontFamily: "font-family: 'Roboto Mono', monospace"}}>
+                        Do you love scary movies? 
+                    </h2>
+                    <h2 style={{ color: '#F0FFFF', fontFamily: "font-family: 'Roboto Mono', monospace", textDecoration: 'underline'}}>
+                    Store & review your favorites on Izutu
+                    </h2>
+                    
                     {
                         this.state.showLogin
                             ? <Signup updateToken={this.props.updateToken} />

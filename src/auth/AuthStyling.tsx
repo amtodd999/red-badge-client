@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
     h5 {
         font-size: 1.5em;
         font-weight: 900;
-        color: #D3D3D3;
+        color: #D2042D;
         margin: 0;
         text-align: left;
     }
