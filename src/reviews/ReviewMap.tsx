@@ -1,38 +1,38 @@
 import React from 'react';
 
-type ReviewMapProps = {
-    bleh: movie[]
-}
+// type ReviewMapProps = {
+//     bleh: movie[]
+// }
 
-type movie = {
-    id: number,
-    FilmTitle: string,
-    reviews: singleReview[]
-}
+// type movie = {
+//     id: number,
+//     FilmTitle: string,
+//     reviews: singleReview[]
+// }
 
-type singleReview = {
-    id: number,
-    Review: string
-}
-export default class ReviewMap extends React.Component<ReviewMapProps, {}>{
-    constructor(props: ReviewMapProps) {
-        super(props)
-        this.state = {}
-    }
+// type singleReview = {
+//     id: number,
+//     Review: string
+// }
+export default class ReviewMap extends React.Component{
+    // constructor(props: ReviewMapProps) {
+    //     super(props)
+    //     this.state = {}
+    // }
 
-// filmReview = this.props.bleh
-fthis = (): void => {
-    return (console.log(this.props.bleh[0].reviews),
-    alert("test")
-    )
-    
-}
+    // // filmReview = this.props.bleh
+    // fthis = (): void => {
+    //     return (console.log(this.props.bleh[0].reviews),
+    //         alert("test")
+    //     )
+
+    // }
 
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
-               <td> {this.fthis()}</td>
+                {/* <td> {this.fthis()}</td> */}
                 {/* <td>{film.reviews.map(review => review)}</td> */}
             </div>
 

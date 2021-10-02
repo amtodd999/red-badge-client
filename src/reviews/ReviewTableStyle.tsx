@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ReviewTableStyle = styled.table`
-    border: 1px solid #ccc;
+    top-border: 1px solid #ccc;
     border-collapse: collapse;
     margin: 0;
     width: 100%;
@@ -22,8 +22,8 @@ export const ReviewTableStyle = styled.table`
     }
 
   tr {
-    background-color: #f8f8f8
-    top-border: 1px solid purple;
+    
+    top-border: 1px solid;
     padding: .35em;
   }
   
@@ -33,10 +33,15 @@ export const ReviewTableStyle = styled.table`
     color: #D3D3D3;
   }
   
+  td {
+    font-family: 'Roboto', sans-serif;
+  }
+
   th {
     font-size: .85em;
     letter-spacing: .1em;
     text-transform: uppercase;
     font-family: 'Metal Mania', cursive;
+    text-decoration: underline;
   }
 `;

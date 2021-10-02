@@ -6,7 +6,7 @@ type ReviewEditProps = {
     sessionToken: string,
     updateOff: () => void,
     reviewToUpdate: { [key: string]: string },
-    fetchMoviesForReview: () => void
+    fetchReviews: () => void
 }
 
 interface ReviewEditState extends ReviewCreateState {
@@ -18,8 +18,8 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
         super(props)
         this.state = {
             isModalVisible: true,
-            Review: '',
-            SelectFilm: ''
+            MovieTitle: this.props.reviewToUpdate.MovieTitle || '',
+            Review: this.props.reviewToUpdate.Review || ''
         }
 
     }
@@ -28,6 +28,7 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
         const myToken = localStorage.getItem('sessionToken');
         const updateBody = {
             review: {
+                MovieTitle: this.state.MovieTitle,
                 Review: this.state.Review
             }
         }
@@ -41,9 +42,9 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
         })
             .then(res => res.json())
             .then((editRes) => {
-                this.setState({ Review: '' })
+                this.setState({ MovieTitle: '', Review: '' })
                 this.props.updateOff()
-                this.props.fetchMoviesForReview()
+                this.props.fetchReviews()
                 console.log(editRes)
             })
     }
@@ -58,6 +59,18 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
             <Modal isOpen={this.state.isModalVisible} toggle={this.modalToggle}>
                 <ModalHeader toggle={this.modalToggle}>Edit Review</ModalHeader>
                 <ModalBody>
+                <div className="form-group">
+                        <label htmlFor="Review">Updated Movie Title</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="UpdatedMovieTitle"
+                            placeholder="Update the movie title for your review"
+                            onChange={(e) => this.setState({ MovieTitle: e.target.value })}
+                            value={this.state.MovieTitle}
+                        // required
+                        />
+                    </div>
                     <div className="form-group">
                         <label htmlFor="Review">Updated Review</label>
                         <input

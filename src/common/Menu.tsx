@@ -64,6 +64,7 @@ export default class Menu extends React.Component<MenuProps, MenuTypes> {
                                     </Link>
                                 </NavLink>
                             </NavItem>
+                            
                             <NavItem>
                                 <NavLink>
                                     <Link to='/movies' className='text-muted'>

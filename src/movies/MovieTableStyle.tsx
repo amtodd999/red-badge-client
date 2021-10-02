@@ -49,7 +49,4 @@ export const MovieTableStyle = styled.table`
     text-decoration: underline;
   }
 
-  placeholder {
-    font-family: 'Roboto', sans-serif;
-  }
 `;

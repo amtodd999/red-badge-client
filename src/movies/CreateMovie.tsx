@@ -43,8 +43,8 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
             .then(mData => {
                 console.log(mData)
                 this.setState({ FilmTitle: '', Overview: '' })
+                this.props.fetchMovies()
             })
-        this.props.fetchMovies()
     }
 
     render() {

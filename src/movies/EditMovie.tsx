@@ -25,7 +25,7 @@ export default class EditMovie extends React.Component<EditMovieProps, EditMovie
 
 
     editMovies = async () => {
-        const myToken = localStorage.getItem('sessionToken');
+        // const myToken = localStorage.getItem('sessionToken');
         const updateBody = {
             film: {
                 FilmTitle: this.state.FilmTitle,
@@ -37,7 +37,7 @@ export default class EditMovie extends React.Component<EditMovieProps, EditMovie
             body: JSON.stringify(updateBody),
             headers: new Headers({
                 "Content-Type": "application/json",
-                'Authorization': `Bearer ${myToken}`
+                'Authorization': `Bearer ${this.props.sessionToken}`
             }),
         }).then((res) => res.json())
             .then((editRes) => {

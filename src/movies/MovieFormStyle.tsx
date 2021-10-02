@@ -60,6 +60,6 @@ display: flex;
     placeholder {
         font-family: 'Roboto', sans-serif;
         color: white;
-      }
+    }
 
 `;

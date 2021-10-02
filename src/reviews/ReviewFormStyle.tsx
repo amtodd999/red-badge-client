@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ReviewFormStyle = styled.form`
+export const ReviewFormStyle = styled.div`
 display: flex;
     flex-direction: column;
     font-family: 'Metal Mania', cursive;
@@ -55,24 +55,9 @@ display: flex;
         font-weight: 60;
         cursor: pointer;
     }
-    a {
-        font-size: 0.8em;
-        font-weight: 600;
-        color: rgba(225,185,152,1);
-        text-decoration: underline;
-        margin-top: 1.5em;
-        cursor: pointer;
-        padding-bottom: 2em;
-    }
-    select {
-        font-family: Montserrat, sans-serif;
-        font-size: 0.75em;
-        font-weight: 500;
-        color: rgba(107,129,117,1);
-        background: none;
-        border: 0.25em solid rgba(107,129,117,1);
-        border-radius: 0.75rem;
-        height: 2.5em;
-        margin-top: 1em;
+    
+    placeholder {
+        font-family: 'Roboto', sans-serif;
+        color: white;
     }
 `;
