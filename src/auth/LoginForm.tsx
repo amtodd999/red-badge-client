@@ -41,11 +41,13 @@ export default class Login extends React.Component<Props, AuthState>{
                 }),
             }).then(
                 (response) => {
+                    console.log(response)
                     if (response.status !== 200) {
                         throw new Error('Unable to login');
                     } else return response.json();
 
                 }).then((data) => {
+                    console.log(data)
                     const admin = "" + (data.User.isAdmin)
                     this.props.updateToken(data.sessionToken);
                     this.props.updateAdmin(admin)            
