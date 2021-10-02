@@ -19,7 +19,7 @@ export default class EditMovie extends React.Component<EditMovieProps, EditMovie
         super(props)
         this.state = {
             isModalVisible: true,
-            FilmTitle: this.props.filmToUpdate.Title || '',
+            FilmTitle: this.props.filmToUpdate.FilmTitle || '',
             Overview: this.props.filmToUpdate.Overview || ''
         }
     }
