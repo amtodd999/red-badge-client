@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wrapper } from './AuthStyling';
 import Login from './LoginForm';
+import APIURL from '../helpers/environment';
 
 type Props = {
     updateToken: (newToken: string) => void
@@ -40,7 +41,7 @@ export default class Signup extends React.Component<Props, AuthState>{
         }
         console.log(reqBody)
 
-        fetch('http://localhost:3000/User/register', {
+        fetch(`${APIURL}/User/register`, {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: new Headers({

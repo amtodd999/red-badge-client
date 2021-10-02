@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environment';
 import { ReviewTableStyle } from './ReviewTableStyle';
 
 type ReviewDisplayProps = {
@@ -30,7 +31,7 @@ export default class ReviewDisplay extends React.Component<ReviewDisplayProps, R
     }
     deleteReview = async (deleteReview: reviewObj) => {
         const myToken = localStorage.getItem('sessionToken');
-        await fetch(`http://localhost:3000/review/delete/${deleteReview.id}`, {
+        await fetch(`${APIURL}/review/delete/${deleteReview.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

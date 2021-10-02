@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environment';
 import { Modal, ModalHeader, ModalBody} from 'reactstrap';
 import {MovieState} from './CreateMovie';
 
@@ -32,7 +33,7 @@ export default class EditMovie extends React.Component<EditMovieProps, EditMovie
                 Overview: this.state.Overview,
             }
         }
-        await fetch(`http://localhost:3000/film/update/${this.props.filmToUpdate.id}`, {
+        await fetch(`${APIURL}/film/update/${this.props.filmToUpdate.id}`, {
             method: "PUT",
             body: JSON.stringify(updateBody),
             headers: new Headers({

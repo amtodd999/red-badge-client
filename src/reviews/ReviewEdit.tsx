@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environment';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { ReviewCreateState } from './ReviewCreate';
 
@@ -32,7 +33,7 @@ export default class ReviewEdit extends React.Component<ReviewEditProps, ReviewE
                 Review: this.state.Review
             }
         }
-        await fetch(`http://localhost:3000/review/update/${this.props.reviewToUpdate.id}`, {
+        await fetch(`${APIURL}/review/update/${this.props.reviewToUpdate.id}`, {
             method: "PUT",
             body: JSON.stringify(updateBody),
             headers: new Headers({

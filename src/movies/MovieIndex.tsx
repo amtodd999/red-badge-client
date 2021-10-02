@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environment';
 import DisplayMovies from './DisplayMovies';
 import CreateMovie from './CreateMovie';
 import EditMovie from './EditMovie';
@@ -37,7 +38,7 @@ export default class MovieIndex extends React.Component<MovieIndexProps, MovieIn
 
     fetchMovies = async () => {
         const myToken = localStorage.getItem('sessionToken');
-        fetch('http://localhost:3000/film/myFilms', {
+        fetch(`${APIURL}/film/myFilms`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

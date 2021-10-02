@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environment';
 import {MovieFormStyle} from './MovieFormStyle';
 
 type MovieProps = {
@@ -31,7 +32,7 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
             }
         }
         console.log(reqBody)
-        fetch('http://localhost:3000/film/add', {
+        fetch(`${APIURL}/film/add`, {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: new Headers({
@@ -87,40 +88,3 @@ export default class CreateMovie extends React.Component<MovieProps, MovieState>
         )
     }
 }
-
-
-    // handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault()
-    //     const reqBody = {
-    //         film: {
-    //             FilmTitle: this.state.FilmTitle,
-    //             Overview: this.state.Overview,
-    //         }
-    //     }
-    //     console.log(reqBody)
-    //     try {
-    //         const res = await fetch('http://localhost:3000/film/add', {
-    //             method: "POST",
-    //             body: JSON.stringify(reqBody),
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 'Authorization': `Bearer ${this.props.sessionToken}`
-    //             },
-    //         })
-    //         console.log(res)
-    //         const json = await res.json();
-    //         console.log(json)
-    //         if (json.errors) {
-    //             let errMsg = json.errors[0].message
-    //             this.setState({ errorText: errMsg.charAt(0).toUpperCase() + errMsg.slice(1) + '.' })
-    //             throw new Error(json.errors[0].message)
-    //         } else {
-    //             console.log(json.Message);
-    //         }
-    //         this.setState({ FilmTitle: '', Overview: '' })
-    //         // this.props.fetchMovies()
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // }
-

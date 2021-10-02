@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environment';
 import ReviewCreate from './ReviewCreate';
 import ReviewEdit from './ReviewEdit';
 import ReviewDisplay from './ReviewDisplay';
@@ -31,7 +32,7 @@ export default class ReviewIndex extends React.Component<ReviewIndexProps, Revie
     }
     fetchReviews = async () => {
         const myToken = localStorage.getItem('sessionToken');
-        fetch('http://localhost:3000/review/myReviews', {
+        fetch(`${APIURL}/review/myReviews`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

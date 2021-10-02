@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environment';
 import styled from 'styled-components';
 import {AdminTableStyle, AdminHeaderStyle} from './AdminTableStyle';
 
@@ -24,7 +25,7 @@ export default class Admin extends React.Component<AdminProps, AdminState>{
     }
 
     fetchUsers = async () => {
-        fetch('http://localhost:3000/User/allusers', {
+        fetch(`${APIURL}/User/allusers`, {
             method: "GET",
             headers: new Headers({
                 "Content-Type": "application/json",
@@ -44,7 +45,7 @@ export default class Admin extends React.Component<AdminProps, AdminState>{
     }
 
     deleteUsers = async (deleteUser: user) => {
-        await fetch(`http://localhost:3000/User/admindelete/${deleteUser.id}`, {
+        await fetch(`${APIURL}/User/admindelete/${deleteUser.id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

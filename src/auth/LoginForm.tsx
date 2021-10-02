@@ -1,6 +1,6 @@
 import React from 'react';
 import { Wrapper } from './AuthStyling';
-
+import APIURL from '../helpers/environment';
 
 
 type Props = {
@@ -33,7 +33,7 @@ export default class Login extends React.Component<Props, AuthState>{
                     password: this.state.password
                 }
             }
-            fetch('http://localhost:3000/User/login', {
+            fetch(`${APIURL}/User/login`, {
                 method: "POST",
                 body: JSON.stringify(reqBody),
                 headers: new Headers({

@@ -1,4 +1,5 @@
 import React from 'react';
+import APIURL from '../helpers/environment';
 import {ReviewFormStyle} from './ReviewFormStyle';
 
 type ReviewCreateProps = {
@@ -30,7 +31,7 @@ export default class ReviewCreate extends React.Component<ReviewCreateProps, Rev
                 Review: this.state.Review
             }
         }
-        fetch('http://localhost:3000/review/add', {
+        fetch(`${APIURL}/review/add`, {
             method: "POST",
             body: JSON.stringify(reqBody),
             headers: new Headers({
