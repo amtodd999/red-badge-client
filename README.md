@@ -1,3 +1,31 @@
+# **Izutu:**
+
+Welcome fans of all things horror. Izutu is a site in which users can create a list of horror movies to watch and then post a review after they have watched them. This is the client side of a PERN stack full CRUD application. The server side of the project can be found [here](https://github.com/amtodd999/red-badge-project-server).
+
+## **Deployed Project:**
+
+The final version deployed to heroku can be found at [https://izutu-amt.herokuapp.com/](https://izutu-amt.herokuapp.com/)
+
+**Made and Styled with:**
+
+- React
+- Styled-Components
+- Reactstrap
+
+**Project Requirements:**
+
+The server portion of my app can be found [here](https://github.com/CLTsolutions/takeoff_server). This site was completed during a part-time coding bootcamp at Eleven Fifty Academy. Requirements included:
+
+- User authentication and registration using a POST method to a server
+- This app includes Films and Reviews both successfully create via POST, retrieve via GET, update via PUT, and delete via DELETE methods to a server.
+- Form validation for user login
+- Uses react-router-dom to navigate through the application
+- React Legacy (Class Components, Lifecycle methods, State Management, etc.)
+- React Styling Libraries
+- Strong Typing with TypeScript
+- Role Based Access Control
+- Fetching data from a deployed server
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
