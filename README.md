@@ -14,7 +14,7 @@ The final version deployed to heroku can be found at [https://izutu-amt.herokuap
 
 **Project Requirements:**
 
-The server portion of my app can be found [here](https://github.com/CLTsolutions/takeoff_server). This site was completed during a part-time coding bootcamp at Eleven Fifty Academy. Requirements included:
+The server portion of my app can be found [here](https://github.com/CLTsolutions/takeoff_server). This site was completed during a Web Development bootcamp at Eleven Fifty Academy. Requirements included:
 
 - User authentication and registration using a POST method to a server
 - This app includes Films and Reviews both successfully create via POST, retrieve via GET, update via PUT, and delete via DELETE methods to a server.
